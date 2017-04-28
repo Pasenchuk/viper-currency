@@ -1,4 +1,4 @@
-package com.sbt.currency.models;
+package com.sbt.currency.domain;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;

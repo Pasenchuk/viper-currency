@@ -1,6 +1,10 @@
-package com.sbt.currency;
+package com.sbt.currency.repository.implementations;
 
 import android.os.AsyncTask;
+
+import com.sbt.currency.interactors.Subscriber;
+import com.sbt.currency.exceptions.RequestError;
+import com.sbt.currency.repository.CurrencyXmlRequest;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -14,11 +18,12 @@ import java.net.URL;
  * Created by Pasenchuk Victor on 28/04/2017
  */
 
-public class XmlRequest extends AsyncTask<Void, Void, String> implements Subscribtion {
+public class CurrencyXmlRequestImpl extends AsyncTask<Void, Void, String> implements CurrencyXmlRequest {
 
-    public static final String CURRENCY_URL = "http://www.cbr.ru/scripts/XML_daily.asp";
+    private static final String CURRENCY_URL = "http://www.cbr.ru/scripts/XML_daily.asp";
     private Subscriber<String, RequestError> subscriber;
 
+    @Override
     public void fetchXmlData(Subscriber<String, RequestError> subscriber) {
 
         this.subscriber = subscriber;
@@ -34,7 +39,7 @@ public class XmlRequest extends AsyncTask<Void, Void, String> implements Subscri
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 return readStream(in);
             } catch (IOException e) {
-                subscriber.onError(new RequestError(e, RequestError.Kind.NETWORK_ERROR));
+                subscriber.onError(new RequestError(e, RequestError.Kind.IO_ERROR));
             } finally {
                 urlConnection.disconnect();
             }

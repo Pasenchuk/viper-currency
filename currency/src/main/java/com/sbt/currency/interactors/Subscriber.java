@@ -1,4 +1,4 @@
-package com.sbt.currency;
+package com.sbt.currency.interactors;
 
 /**
  * Created by Pasenchuk Victor on 28/04/2017
