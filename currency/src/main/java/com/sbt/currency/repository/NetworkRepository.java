@@ -5,5 +5,7 @@ package com.sbt.currency.repository;
  */
 
 public interface NetworkRepository {
+
     CurrencyXmlRequest getCurrencyXmlRequest();
+
 }

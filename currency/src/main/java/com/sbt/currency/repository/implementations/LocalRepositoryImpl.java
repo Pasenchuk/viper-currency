@@ -13,6 +13,9 @@ public class LocalRepositoryImpl implements LocalRepository {
     private static final String CURRENCIES_PREFS = "CURRENCIES_PREFS";
 
     private static final String CURRENCY_XML_KEY = "CURRENCY_XML_KEY";
+    public static final String PRIMARY_CURRENCY_KEY = "PRIMARY_CURRENCY_KEY";
+    public static final String SECONDARY_CURRENCY_KEY = "SECONDARY_CURRENCY_KEY";
+    public static final String AMOUNT_KEY = "AMOUNT_KEY";
     private final SharedPreferences sharedPreferences;
 
     public LocalRepositoryImpl(Context context) {
@@ -29,6 +32,45 @@ public class LocalRepositoryImpl implements LocalRepository {
         sharedPreferences
                 .edit()
                 .putString(CURRENCY_XML_KEY, currencyXmlKey)
+                .apply();
+    }
+
+    @Override
+    public int getPrimaryCurrencyId() {
+        return sharedPreferences.getInt(PRIMARY_CURRENCY_KEY, NO_ID);
+    }
+
+    @Override
+    public void setPrimaryCurrencyId(int id) {
+        sharedPreferences
+                .edit()
+                .putInt(PRIMARY_CURRENCY_KEY, id)
+                .apply();
+    }
+
+    @Override
+    public int getSecondaryCurrencyId() {
+        return sharedPreferences.getInt(SECONDARY_CURRENCY_KEY, NO_ID);
+    }
+
+    @Override
+    public void setSecondaryCurrencyId(int id) {
+        sharedPreferences
+                .edit()
+                .putInt(SECONDARY_CURRENCY_KEY, id)
+                .apply();
+    }
+
+    @Override
+    public float getAmount() {
+        return sharedPreferences.getInt(AMOUNT_KEY, 0);
+    }
+
+    @Override
+    public void setAmount(float amount) {
+        sharedPreferences
+                .edit()
+                .putFloat(AMOUNT_KEY, amount)
                 .apply();
     }
 }

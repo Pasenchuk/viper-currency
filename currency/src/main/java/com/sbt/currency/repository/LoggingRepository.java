@@ -5,6 +5,7 @@ package com.sbt.currency.repository;
  */
 
 public interface LoggingRepository {
+
     void log(String tag, Object message);
 
     void log(Object message);
@@ -12,4 +13,5 @@ public interface LoggingRepository {
     void logError(String tag, Object message);
 
     void logError(Object message);
+
 }

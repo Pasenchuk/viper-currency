@@ -9,11 +9,13 @@ import java.util.List;
  */
 
 public interface CurrenciesView {
-    void showMainCurrency(Valute valute);
 
-    void showSecondCurrency(Valute valute);
+    void showPrimaryCurrency(Valute valute);
+
+    void showSecondaryCurrency(Valute valute);
 
     void updateCurrencies(List<Valute> valutes, double value);
 
     void updateCurrencies(double value);
+
 }
