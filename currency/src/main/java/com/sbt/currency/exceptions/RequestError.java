@@ -21,6 +21,7 @@ public class RequestError extends Throwable {
         PROTOCOL_ERROR,
         NETWORK_ERROR,
         IO_ERROR,
+        XML_PARSE_ERROR,
         UNKNOWN_ERROR
     }
 

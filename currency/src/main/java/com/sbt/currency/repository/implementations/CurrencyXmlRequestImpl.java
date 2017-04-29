@@ -2,8 +2,9 @@ package com.sbt.currency.repository.implementations;
 
 import android.os.AsyncTask;
 
-import com.sbt.currency.interactors.Subscriber;
 import com.sbt.currency.exceptions.RequestError;
+import com.sbt.currency.interactors.Subscriber;
+import com.sbt.currency.interactors.Subscribtion;
 import com.sbt.currency.repository.CurrencyXmlRequest;
 
 import java.io.BufferedInputStream;
@@ -24,10 +25,12 @@ public class CurrencyXmlRequestImpl extends AsyncTask<Void, Void, String> implem
     private Subscriber<String, RequestError> subscriber;
 
     @Override
-    public void fetchXmlData(Subscriber<String, RequestError> subscriber) {
+    public Subscribtion fetchXmlData(Subscriber<String, RequestError> subscriber) {
 
         this.subscriber = subscriber;
         execute();
+
+        return this;
     }
 
     @Override

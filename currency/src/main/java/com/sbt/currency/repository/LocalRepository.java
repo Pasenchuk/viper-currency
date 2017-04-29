@@ -5,7 +5,7 @@ package com.sbt.currency.repository;
  */
 
 public interface LocalRepository {
-    String getCurrencyXmlKey();
+    String getCurrencyXml();
 
-    void setCurrencyXmlKey(String currencyXmlKey);
+    void setCurrencyXml(String currencyXmlKey);
 }

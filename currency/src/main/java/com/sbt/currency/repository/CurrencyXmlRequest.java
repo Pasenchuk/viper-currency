@@ -9,5 +9,5 @@ import com.sbt.currency.exceptions.RequestError;
  */
 
 public interface CurrencyXmlRequest extends Subscribtion {
-    void fetchXmlData(Subscriber<String, RequestError> subscriber);
+    Subscribtion fetchXmlData(Subscriber<String, RequestError> subscriber);
 }

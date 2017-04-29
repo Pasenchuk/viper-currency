@@ -1,5 +1,6 @@
 package com.sbt.currency.di;
 
+import com.sbt.currency.repository.LoggingRepository;
 import com.sbt.currency.repository.LocalRepository;
 import com.sbt.currency.repository.NetworkRepository;
 
@@ -8,7 +9,11 @@ import com.sbt.currency.repository.NetworkRepository;
  */
 
 public interface AppModule {
+
     LocalRepository getLocalRepository();
 
     NetworkRepository getNetworkRepository();
+
+    LoggingRepository getLoggingRepository();
+
 }

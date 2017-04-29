@@ -6,9 +6,12 @@ import android.util.Log;
 
 import com.sbt.currency.R;
 import com.sbt.currency.app.CurrencyApp;
+import com.sbt.currency.di.AppModule;
+import com.sbt.currency.domain.ValCurs;
 import com.sbt.currency.exceptions.RequestError;
+import com.sbt.currency.interactors.CurrenciesInteractor;
 import com.sbt.currency.interactors.Subscriber;
-import com.sbt.currency.repository.NetworkRepository;
+import com.sbt.currency.repository.LoggingRepository;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,20 +20,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final NetworkRepository networkRepository = ((CurrencyApp) getApplication()).getAppModule().getNetworkRepository();
+        final AppModule appModule = ((CurrencyApp) getApplication()).getAppModule();
 
-        networkRepository.getCurrencyXmlRequest().fetchXmlData(new Subscriber<String, RequestError>() {
+        final LoggingRepository loggingRepository = appModule.getLoggingRepository();
+        final CurrenciesInteractor currenciesInteractor = new CurrenciesInteractor(appModule);
+
+        currenciesInteractor.enqueueCurrencies(new Subscriber<ValCurs, RequestError>() {
             @Override
-            public void onNext(String s) {
-                Log.d("xml", s);
+            public void onNext(ValCurs valCurs) {
+                loggingRepository.log(valCurs.getValute().size());
             }
 
             @Override
             public void onError(RequestError requestError) {
-
-                Log.e("xml", requestError.getMessage());
-                Log.e("xml", requestError.getKind().name());
+                if (requestError.getMessage() != null)
+                    loggingRepository.log("xml", requestError.getMessage());
+                loggingRepository.log("xml", requestError.getKind().name());
             }
         });
+
     }
 }

@@ -20,12 +20,12 @@ public class LocalRepositoryImpl implements LocalRepository {
     }
 
     @Override
-    public String getCurrencyXmlKey() {
+    public String getCurrencyXml() {
         return sharedPreferences.getString(CURRENCY_XML_KEY, null);
     }
 
     @Override
-    public void setCurrencyXmlKey(String currencyXmlKey) {
+    public void setCurrencyXml(String currencyXmlKey) {
         sharedPreferences
                 .edit()
                 .putString(CURRENCY_XML_KEY, currencyXmlKey)
