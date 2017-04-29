@@ -2,7 +2,6 @@ package com.sbt.currency.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.sbt.currency.R;
 import com.sbt.currency.app.CurrencyApp;

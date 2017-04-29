@@ -8,82 +8,70 @@ import org.simpleframework.xml.Element;
  */
 public class Valute {
 
-    @Element(name = "NumCode", required = false)
-    String numCode;
+    @Element(name = "NumCode")
+    int numCode;
 
-
-    @Element(name = "CharCode", required = false)
+    @Element(name = "CharCode")
     String charCode;
 
+    @Element(name = "Nominal")
+    int nominal;
 
-    @Element(name = "Nominal", required = false)
-    String nominal;
-
-
-    @Element(name = "Name", required = false)
+    @Element(name = "Name")
     String name;
 
+    @Element(name = "Value")
+    double value;
+    
+    @Attribute(name = "ID")
+    String id;
 
-    @Element(name = "Value", required = false)
-    String value;
-
-
-    @Attribute(name = "ID", required = false)
-    String iD;
-
-
-    public String getNumCode() {
-        return this.numCode;
+    public int getNumCode() {
+        return numCode;
     }
 
-    public void setNumCode(String _value) {
-        this.numCode = _value;
+    public void setNumCode(int numCode) {
+        this.numCode = numCode;
     }
-
 
     public String getCharCode() {
-        return this.charCode;
+        return charCode;
     }
 
-    public void setCharCode(String _value) {
-        this.charCode = _value;
+    public void setCharCode(String charCode) {
+        this.charCode = charCode;
     }
 
-
-    public String getNominal() {
-        return this.nominal;
+    public int getNominal() {
+        return nominal;
     }
 
-    public void setNominal(String _value) {
-        this.nominal = _value;
+    public void setNominal(int nominal) {
+        this.nominal = nominal;
     }
-
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    public void setName(String _value) {
-        this.name = _value;
+    public void setName(String name) {
+        this.name = name;
     }
 
-
-    public String getValue() {
-        return this.value;
+    public double getValue() {
+        return value;
     }
 
-    public void setValue(String _value) {
-        this.value = _value;
+    public void setValue(double value) {
+        this.value = value;
     }
 
-
-    public String getID() {
-        return this.iD;
+    public String getId() {
+        return id;
     }
 
-    public void setID(String _value) {
-        this.iD = _value;
+    public void setId(String id) {
+        this.id = id;
     }
-
-
+    
 }

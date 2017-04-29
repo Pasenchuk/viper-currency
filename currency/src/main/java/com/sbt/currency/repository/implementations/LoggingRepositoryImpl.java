@@ -9,6 +9,7 @@ import com.sbt.currency.repository.LoggingRepository;
  */
 
 public class LoggingRepositoryImpl implements LoggingRepository {
+
     @Override
     public void log(String tag, Object message) {
         Log.d(tag, String.valueOf(message));
@@ -28,4 +29,5 @@ public class LoggingRepositoryImpl implements LoggingRepository {
     public void logError(Object message) {
         Log.e(new Exception().getStackTrace()[1].getClassName(), String.valueOf(message));
     }
+
 }

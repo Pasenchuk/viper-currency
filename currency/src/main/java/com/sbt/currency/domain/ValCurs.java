@@ -4,6 +4,7 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,38 +19,34 @@ public class ValCurs {
 
 
     @Attribute(name = "Date", required = false)
-    String date;
+    Date date;
 
 
     @Attribute(name = "name", required = false)
     String name;
 
-
     public List<Valute> getValute() {
-        return this.valute;
+        return valute;
     }
 
-    public void setValute(List<Valute> _value) {
-        this.valute = _value;
+    public void setValute(List<Valute> valute) {
+        this.valute = valute;
     }
 
-
-    public String getDate() {
-        return this.date;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDate(String _value) {
-        this.date = _value;
+    public void setDate(Date date) {
+        this.date = date;
     }
-
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    public void setName(String _value) {
-        this.name = _value;
+    public void setName(String name) {
+        this.name = name;
     }
-
 
 }
