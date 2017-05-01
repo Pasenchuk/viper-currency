@@ -3,11 +3,21 @@ package com.sbt.currency.interactors;
 import com.sbt.currency.di.AppModule;
 import com.sbt.currency.domain.ValCurs;
 import com.sbt.currency.exceptions.RequestError;
+import com.sbt.currency.interactors.Subscriber;
+import com.sbt.currency.interactors.Subscribtion;
+import com.sbt.currency.interactors.transformers.DateFormatTransformer;
+import com.sbt.currency.interactors.transformers.NumberFormatTransformer;
 import com.sbt.currency.repository.LocalRepository;
 import com.sbt.currency.repository.LoggingRepository;
 import com.sbt.currency.repository.NetworkRepository;
 
 import org.simpleframework.xml.core.Persister;
+import org.simpleframework.xml.transform.RegistryMatcher;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Pasenchuk Victor on 29/04/2017
@@ -17,14 +27,24 @@ public class CurrenciesInteractor {
 
     private final LocalRepository localRepository;
     private final NetworkRepository networkRepository;
-    private final Persister persister;
+    private final Persister serializer;
     private final LoggingRepository loggingRepository;
 
     public CurrenciesInteractor(AppModule appModule) {
         localRepository = appModule.getLocalRepository();
         networkRepository = appModule.getNetworkRepository();
         loggingRepository = appModule.getLoggingRepository();
-        persister = new Persister();
+
+        serializer = initSerializer();
+    }
+
+    private Persister initSerializer() {
+
+        RegistryMatcher registryMatcher = new RegistryMatcher();
+        registryMatcher.bind(Date.class, new DateFormatTransformer());
+        registryMatcher.bind(Double.class, new NumberFormatTransformer());
+
+        return new Persister(registryMatcher);
     }
 
     public Subscribtion enqueueCurrencies(final Subscriber<ValCurs, RequestError> subscriber) {
@@ -50,21 +70,27 @@ public class CurrenciesInteractor {
                                 localRepository.setCurrencyXml(s);
                             } catch (Exception e) {
                                 loggingRepository.logError("Can't load XML from network");
-                                subscriber.onError(new RequestError(null, RequestError.Kind.XML_PARSE_ERROR));
+                                subscriber.onError(new RequestError(new IllegalStateException(), RequestError.Kind.XML_PARSE_ERROR));
+                                throw new IllegalStateException(e);
                             }
                         } else
-                            subscriber.onError(new RequestError(null, RequestError.Kind.XML_PARSE_ERROR));
+                            subscriber.onError(new RequestError(new IllegalStateException(), RequestError.Kind.XML_PARSE_ERROR));
                     }
 
                     @Override
                     public void onError(RequestError requestError) {
                         subscriber.onError(requestError);
                     }
+
+                    @Override
+                    public void onComplete() {
+                        subscriber.onComplete();
+                    }
                 });
     }
 
     private ValCurs getCurrenciesFromXml(String currencyXml) throws Exception {
-        return persister.read(ValCurs.class, currencyXml);
+        return serializer.read(ValCurs.class, currencyXml);
     }
 
 }

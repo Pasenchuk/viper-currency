@@ -2,10 +2,12 @@ package com.sbt.currency.domain;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 
 /**
  * Created by Pasenchuk Victor on 28/04/2017
  */
+@Root(name = "Valute")
 public class Valute {
 
     @Element(name = "NumCode")
@@ -21,7 +23,7 @@ public class Valute {
     String name;
 
     @Element(name = "Value")
-    double value;
+    Double value;
     
     @Attribute(name = "ID")
     String id;

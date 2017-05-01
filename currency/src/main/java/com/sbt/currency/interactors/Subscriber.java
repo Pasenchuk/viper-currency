@@ -5,7 +5,10 @@ package com.sbt.currency.interactors;
  */
 
 public interface Subscriber<T, E extends Throwable> {
+
     void onNext(T t);
 
     void onError(E e);
+
+    void onComplete();
 }

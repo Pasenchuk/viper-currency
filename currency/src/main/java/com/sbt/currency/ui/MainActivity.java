@@ -36,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
                     loggingRepository.log("xml", requestError.getMessage());
                 loggingRepository.log("xml", requestError.getKind().name());
             }
+
+            @Override
+            public void onComplete() {
+
+            }
         });
 
     }

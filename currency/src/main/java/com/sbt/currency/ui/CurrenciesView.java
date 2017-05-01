@@ -14,7 +14,7 @@ public interface CurrenciesView {
 
     void showSecondaryCurrency(Valute valute);
 
-    void updateCurrencies(List<Valute> valutes, double value);
+    void updateCurrencies(List<Valute> valutes);
 
     void updateCurrencies(double value);
 
