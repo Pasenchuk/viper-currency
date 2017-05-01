@@ -8,12 +8,15 @@ import java.util.Locale;
 /**
  * Created by Pasenchuk Victor on 29/04/2017
  */
-public class NumberFormatTransformer implements Transform<Double> {
+public class CurrencyFormatTransformer implements Transform<Double> {
+
+    private static final int MAXIMUM_CURRENCY_FRACTION_DIGITS = 2;
 
     private final NumberFormat numberFormat;
 
-    public NumberFormatTransformer() {
+    public CurrencyFormatTransformer() {
         numberFormat = NumberFormat.getInstance(new Locale("Ru"));
+        numberFormat.setMaximumFractionDigits(MAXIMUM_CURRENCY_FRACTION_DIGITS);
     }
 
     @Override

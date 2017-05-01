@@ -3,10 +3,8 @@ package com.sbt.currency.interactors;
 import com.sbt.currency.di.AppModule;
 import com.sbt.currency.domain.ValCurs;
 import com.sbt.currency.exceptions.RequestError;
-import com.sbt.currency.interactors.Subscriber;
-import com.sbt.currency.interactors.Subscribtion;
 import com.sbt.currency.interactors.transformers.DateFormatTransformer;
-import com.sbt.currency.interactors.transformers.NumberFormatTransformer;
+import com.sbt.currency.interactors.transformers.CurrencyFormatTransformer;
 import com.sbt.currency.repository.LocalRepository;
 import com.sbt.currency.repository.LoggingRepository;
 import com.sbt.currency.repository.NetworkRepository;
@@ -14,10 +12,7 @@ import com.sbt.currency.repository.NetworkRepository;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.transform.RegistryMatcher;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by Pasenchuk Victor on 29/04/2017
@@ -42,7 +37,7 @@ public class CurrenciesInteractor {
 
         RegistryMatcher registryMatcher = new RegistryMatcher();
         registryMatcher.bind(Date.class, new DateFormatTransformer());
-        registryMatcher.bind(Double.class, new NumberFormatTransformer());
+        registryMatcher.bind(Double.class, new CurrencyFormatTransformer());
 
         return new Persister(registryMatcher);
     }
