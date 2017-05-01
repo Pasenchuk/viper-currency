@@ -59,17 +59,7 @@ public class CurrenciesInteractor {
                 .fetchXmlData(new Subscriber<String, RequestError>() {
                     @Override
                     public void onNext(String s) {
-                        if (s != null) {
-                            try {
-                                subscriber.onNext(getCurrenciesFromXml(s));
-                                localRepository.setCurrencyXml(s);
-                            } catch (Exception e) {
-                                loggingRepository.logError("Can't load XML from network");
-                                subscriber.onError(new RequestError(new IllegalStateException(), RequestError.Kind.XML_PARSE_ERROR));
-                                throw new IllegalStateException(e);
-                            }
-                        } else
-                            subscriber.onError(new RequestError(new IllegalStateException(), RequestError.Kind.XML_PARSE_ERROR));
+                        onNetworkResult(s, subscriber);
                     }
 
                     @Override
@@ -83,6 +73,22 @@ public class CurrenciesInteractor {
                     }
                 });
     }
+
+
+    void onNetworkResult(String s, final Subscriber<ValCurs, RequestError> subscriber) {
+        if (s != null) {
+            try {
+                subscriber.onNext(getCurrenciesFromXml(s));
+                localRepository.setCurrencyXml(s);
+            } catch (Exception e) {
+                loggingRepository.logError("Can't load XML from network");
+                subscriber.onError(new RequestError(new IllegalStateException(), RequestError.Kind.XML_PARSE_ERROR));
+                throw new IllegalStateException(e);
+            }
+        } else
+            subscriber.onError(new RequestError(new IllegalStateException(), RequestError.Kind.XML_PARSE_ERROR));
+    }
+
 
     private ValCurs getCurrenciesFromXml(String currencyXml) throws Exception {
         return serializer.read(ValCurs.class, currencyXml);
