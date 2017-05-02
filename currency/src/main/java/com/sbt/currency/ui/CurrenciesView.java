@@ -1,5 +1,6 @@
 package com.sbt.currency.ui;
 
+import com.sbt.currency.domain.DisplayCurrency;
 import com.sbt.currency.domain.Valute;
 
 import java.util.List;
@@ -10,12 +11,10 @@ import java.util.List;
 
 public interface CurrenciesView {
 
-    void showPrimaryCurrency(Valute valute);
+    void showPrimaryCurrency(DisplayCurrency currency);
 
-    void showSecondaryCurrency(Valute valute);
+    void showSecondaryCurrency(DisplayCurrency currency);
 
-    void updateCurrencies(List<Valute> valutes);
-
-    void updateCurrencies(double value);
+    void updateCurrencies(List<DisplayCurrency> currencies);
 
 }
