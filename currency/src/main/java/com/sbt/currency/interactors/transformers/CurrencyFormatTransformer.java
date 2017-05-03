@@ -11,12 +11,14 @@ import java.util.Locale;
 public class CurrencyFormatTransformer implements Transform<Double> {
 
     private static final int MAXIMUM_CURRENCY_FRACTION_DIGITS = 2;
+    private static final int MINIMUM_CURRENCY_FRACTION_DIGITS = 2;
 
     private final NumberFormat numberFormat;
 
     public CurrencyFormatTransformer() {
         numberFormat = NumberFormat.getInstance(new Locale("Ru"));
         numberFormat.setMaximumFractionDigits(MAXIMUM_CURRENCY_FRACTION_DIGITS);
+        numberFormat.setMinimumFractionDigits(MINIMUM_CURRENCY_FRACTION_DIGITS);
     }
 
     @Override
