@@ -23,18 +23,23 @@ public class DisplayCurrency {
     private String primaryCharCode;
     private CurrencyFormatTransformer currencyFormatTransformer = new CurrencyFormatTransformer();
 
-    public DisplayCurrency(Valute currency, Valute convertTo) {
+    public DisplayCurrency(Valute currency) {
         numCode = currency.getNumCode();
         charCode = currency.getCharCode();
         name = currency.getName();
         nominal = String.valueOf(currency.getNominal());
-        primaryCharCode = convertTo.getCharCode();
+    }
 
+    public DisplayCurrency(Valute currency, Valute convertTo) {
+        this(currency);
+
+        primaryCharCode = convertTo.getCharCode();
         displayNominalValue = currencyFormatTransformer.write(getExchangeNominalValue(currency, convertTo));
     }
 
     public DisplayCurrency(Valute currency, Valute convertTo, double amount) {
         this(currency, convertTo);
+        
         displayValue = currencyFormatTransformer.write(getExchangeValue(currency, convertTo, amount));
     }
 

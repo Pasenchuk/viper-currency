@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:layout_marginLeft="@dimen/currency_margin"
-    android:layout_marginRight="@dimen/currency_margin">
+    android:layout_marginRight="@dimen/currency_margin"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true">
 
     <TextView
         android:id="@+id/char_code"
