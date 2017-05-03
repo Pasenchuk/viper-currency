@@ -10,12 +10,14 @@ import com.sbt.currency.repository.LocalRepository;
  */
 
 public class LocalRepositoryImpl implements LocalRepository {
+
     private static final String CURRENCIES_PREFS = "CURRENCIES_PREFS";
 
     private static final String CURRENCY_XML_KEY = "CURRENCY_XML_KEY";
-    public static final String PRIMARY_CURRENCY_KEY = "PRIMARY_CURRENCY_KEY";
-    public static final String SECONDARY_CURRENCY_KEY = "SECONDARY_CURRENCY_KEY";
-    public static final String AMOUNT_KEY = "AMOUNT_KEY";
+    private static final String PRIMARY_CURRENCY_KEY = "PRIMARY_CURRENCY_KEY";
+    private static final String SECONDARY_CURRENCY_KEY = "SECONDARY_CURRENCY_KEY";
+
+    private static final String AMOUNT_KEY = "AMOUNT_KEY";
     private final SharedPreferences sharedPreferences;
 
     public LocalRepositoryImpl(Context context) {

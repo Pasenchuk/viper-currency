@@ -40,7 +40,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Cu
         holder.charCode.setText(displayCurrency.getCharCode());
         holder.nominal.setText(displayCurrency.getNominal());
         holder.name.setText(displayCurrency.getName());
-        holder.exchangeValue.setText(displayCurrency.getExchangeValue());
+        holder.exchangeValue.setText(displayCurrency.getDisplayNominalValue());
         holder.primaryCharCode.setText(displayCurrency.getPrimaryCharCode());
     }
 

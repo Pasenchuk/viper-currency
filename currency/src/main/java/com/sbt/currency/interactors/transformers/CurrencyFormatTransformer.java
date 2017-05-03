@@ -26,7 +26,7 @@ public class CurrencyFormatTransformer implements Transform<Double> {
     }
 
     @Override
-    public String write(Double value) throws Exception {
+    public String write(Double value)  {
         return numberFormat.format(value);
     }
 
