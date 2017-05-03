@@ -10,6 +10,8 @@ import org.simpleframework.xml.Root;
 @Root(name = "Valute")
 public class Valute {
 
+    public static final int ROUBLE_NUM_CODE = 810;
+
     @Element(name = "NumCode")
     int numCode;
 
@@ -24,9 +26,21 @@ public class Valute {
 
     @Element(name = "Value")
     Double value;
-    
+
     @Attribute(name = "ID")
     String id;
+
+    public static Valute defaultRubInstance() {
+        final Valute valute = new Valute();
+
+        valute.numCode = ROUBLE_NUM_CODE;
+        valute.charCode = "RUB";
+        valute.nominal = 1;
+        valute.name = "Российский рубль";
+        valute.value = 1.0;
+
+        return valute;
+    }
 
     public int getNumCode() {
         return numCode;

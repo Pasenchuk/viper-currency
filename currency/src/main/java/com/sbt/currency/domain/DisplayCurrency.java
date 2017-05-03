@@ -6,7 +6,7 @@ package com.sbt.currency.domain;
 
 public class DisplayCurrency {
 
-    private String numCode;
+    private int numCode;
 
     private String charCode;
 
@@ -18,11 +18,11 @@ public class DisplayCurrency {
 
     private String primaryCharCode;
 
-    public String getNumCode() {
+    public int getNumCode() {
         return numCode;
     }
 
-    public void setNumCode(String numCode) {
+    public void setNumCode(int numCode) {
         this.numCode = numCode;
     }
 
@@ -50,7 +50,7 @@ public class DisplayCurrency {
         this.nominal = nominal;
     }
 
-    public String getDisplayValue() {
+    public String getExchangeValue() {
         return displayValue;
     }
 
