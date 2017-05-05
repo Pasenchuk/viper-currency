@@ -80,4 +80,5 @@ public class CurrenciesFragment extends Fragment {
         super.onStart();
         currenciesPresenter.onStart();
     }
+
 }
