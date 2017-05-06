@@ -11,7 +11,7 @@ import java.util.HashMap;
  * Created by Pasenchuk Victor on 06/05/2017
  */
 
-public abstract class KeyValueMock<B> {
+public abstract class KeyValueMock {
 
 
     private HashMap<String, Object> storage = new HashMap<>();
@@ -35,15 +35,19 @@ public abstract class KeyValueMock<B> {
         });
     }
 
-    protected <T> OngoingStubbing<T> keyValueSetterMock(OngoingStubbing<T> stubbing, final B builder) {
+    protected <T> OngoingStubbing<T> keyValueSetterMock(OngoingStubbing<T> stubbing) {
 
-        return stubbing.thenAnswer(new Answer<B>() {
+        return stubbing.thenAnswer(new Answer<T>() {
             @Override
-            public B answer(InvocationOnMock invocation) throws Throwable {
+            public T answer(InvocationOnMock invocation) throws Throwable {
                 Object[] args = invocation.getArguments();
-                storage.put((String) args[0], (T) args[1]);
-                return builder;
+                storage.put((String) args[0], args[1]);
+                return (T) invocation.getMock();
             }
         });
+    }
+
+    public void clearStorage() {
+        storage.clear();
     }
 }

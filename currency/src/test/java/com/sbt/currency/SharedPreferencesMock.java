@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
  * Created by Pasenchuk Victor on 06/05/2017
  */
 
-public class SharedPreferencesMock extends KeyValueMock<SharedPreferences.Editor> {
+public class SharedPreferencesMock extends KeyValueMock {
     @Mock
     private SharedPreferences sharedPreferences;
     @Mock
@@ -33,11 +33,11 @@ public class SharedPreferencesMock extends KeyValueMock<SharedPreferences.Editor
 
         when(sharedPreferences.edit()).thenReturn(editor);
 
-        keyValueSetterMock(when(editor.putBoolean(anyString(), anyBoolean())), editor);
-        keyValueSetterMock(when(editor.putFloat(anyString(), anyFloat())), editor);
-        keyValueSetterMock(when(editor.putInt(anyString(), anyInt())), editor);
-        keyValueSetterMock(when(editor.putLong(anyString(), anyLong())), editor);
-        keyValueSetterMock(when(editor.putString(anyString(), anyString())), editor);
+        keyValueSetterMock(when(editor.putBoolean(anyString(), anyBoolean())));
+        keyValueSetterMock(when(editor.putFloat(anyString(), anyFloat())));
+        keyValueSetterMock(when(editor.putInt(anyString(), anyInt())));
+        keyValueSetterMock(when(editor.putLong(anyString(), anyLong())));
+        keyValueSetterMock(when(editor.putString(anyString(), anyString())));
     }
 
     public SharedPreferences getSharedPreferences() {
