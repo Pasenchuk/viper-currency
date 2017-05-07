@@ -1,4 +1,4 @@
-package com.sbt.currency;
+package com.sbt.currency.mocks;
 
 import android.content.SharedPreferences;
 

@@ -1,21 +1,16 @@
 package com.sbt.currency.repository.implementations;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
-import com.sbt.currency.SharedPreferencesMock;
+import com.sbt.currency.mocks.MockModule;
+import com.sbt.currency.repository.LocalRepository;
 
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
-
 import static com.sbt.currency.repository.LocalRepository.NO_ID;
-import static com.sbt.currency.repository.implementations.LocalRepositoryImpl.CURRENCIES_PREFS;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by Pasenchuk Victor on 06/05/2017
@@ -23,23 +18,17 @@ import static org.mockito.Mockito.when;
 public class LocalRepositoryImplTest {
 
 
-    private LocalRepositoryImpl localRepository;
+    private LocalRepository localRepository;
 
     @Mock
     private Context context;
 
 
-    private HashMap<String, Object> prefs;
-
-
     @BeforeClass
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
+        final MockModule mockModule = new MockModule();
 
-        final SharedPreferences sharedPreferences = new SharedPreferencesMock().getSharedPreferences();
-        when(context.getSharedPreferences(CURRENCIES_PREFS, Context.MODE_PRIVATE)).thenReturn(sharedPreferences);
-
-        localRepository = new LocalRepositoryImpl(context);
+        localRepository = mockModule.getLocalRepository();
 
 
     }

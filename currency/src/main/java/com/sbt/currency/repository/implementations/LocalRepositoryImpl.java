@@ -11,7 +11,7 @@ import com.sbt.currency.repository.LocalRepository;
 
 public class LocalRepositoryImpl implements LocalRepository {
 
-    static final String CURRENCIES_PREFS = "CURRENCIES_PREFS";
+    public static final String CURRENCIES_PREFS = "CURRENCIES_PREFS";
 
     private static final String CURRENCY_XML_KEY = "CURRENCY_XML_KEY";
     private static final String PRIMARY_CURRENCY_KEY = "PRIMARY_CURRENCY_KEY";
