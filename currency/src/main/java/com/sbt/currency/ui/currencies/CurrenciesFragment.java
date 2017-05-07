@@ -78,18 +78,18 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
 
     @Override
     public void showPrimaryCurrency(DisplayCurrency currency) {
-
+        primaryCurrency.setText(currency.getCharCode());
     }
 
     @Override
     public void showSecondaryCurrency(DisplayCurrency currency) {
-
+        secondaryCurrency.setText(currency.getCharCode());
+        calculationResult.setText(currency.getExchangeValue());
     }
 
     @Override
     public void updateCurrencies(List<DisplayCurrency> currencies) {
-        if (CurrenciesFragment.this.isViewVisible())
-            currenciesAdapter.setDisplayCurrencies(currencies);
+        currenciesAdapter.setDisplayCurrencies(currencies);
     }
 
     @Override

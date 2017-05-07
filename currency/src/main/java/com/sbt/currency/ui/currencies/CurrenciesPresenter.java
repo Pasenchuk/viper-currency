@@ -47,16 +47,18 @@ public class CurrenciesPresenter {
         subscribtion = currenciesInteractor.enqueueCurrencies(new Subscriber<ValCurs, RequestError>() {
             @Override
             public void onNext(ValCurs valCurs) {
-                rawCurrencies = valCurs.getValute();
+                if (currenciesView.isViewVisible()) {
+                    rawCurrencies = valCurs.getValute();
 
-                rawCurrencies.add(defaultRubInstance);
+                    rawCurrencies.add(defaultRubInstance);
 
-                final ArrayList<DisplayCurrency> displayCurrencies = new ArrayList<>(rawCurrencies.size());
-                for (Valute rawCurrency : rawCurrencies)
-                    displayCurrencies.add(DisplayCurrencyFactory.getListCurrency(rawCurrency, defaultRubInstance));
+                    final ArrayList<DisplayCurrency> displayCurrencies = new ArrayList<>(rawCurrencies.size());
+                    for (Valute rawCurrency : rawCurrencies)
+                        displayCurrencies.add(DisplayCurrencyFactory.getListCurrency(rawCurrency, defaultRubInstance));
 
 
-                currenciesView.updateCurrencies(displayCurrencies);
+                    currenciesView.updateCurrencies(displayCurrencies);
+                }
             }
 
             @Override

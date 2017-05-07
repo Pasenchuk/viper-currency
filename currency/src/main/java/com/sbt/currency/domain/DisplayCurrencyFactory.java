@@ -35,8 +35,8 @@ public class DisplayCurrencyFactory {
     }
 
 
-    static double getExchangeValue(Valute currency, Valute convertTo, double amount) {
-        return (currency.value / currency.nominal) / (convertTo.value / convertTo.nominal) * amount;
+    static double getExchangeValue(Valute convertTo, Valute primaryCurrency, double amount) {
+        return (primaryCurrency.value / primaryCurrency.nominal) / (convertTo.value / convertTo.nominal) * amount;
     }
 
     static double getExchangeNominalValue(Valute currency, Valute convertTo) {

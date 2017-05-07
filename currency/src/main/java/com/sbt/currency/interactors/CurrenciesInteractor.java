@@ -90,7 +90,7 @@ public class CurrenciesInteractor {
     }
 
 
-    private ValCurs getCurrenciesFromXml(String currencyXml) throws Exception {
+    public ValCurs getCurrenciesFromXml(String currencyXml) throws Exception {
         return serializer.read(ValCurs.class, currencyXml);
     }
 
