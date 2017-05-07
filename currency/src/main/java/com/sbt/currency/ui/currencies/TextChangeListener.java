@@ -1,4 +1,4 @@
-package com.sbt.currency.ui;
+package com.sbt.currency.ui.currencies;
 
 import android.text.Editable;
 import android.text.TextWatcher;

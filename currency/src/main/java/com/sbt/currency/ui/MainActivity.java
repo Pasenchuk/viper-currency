@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.sbt.currency.R;
+import com.sbt.currency.ui.currencies.CurrenciesFragment;
 
 public class MainActivity extends AppCompatActivity {
 
