@@ -3,12 +3,14 @@ package com.sbt.currency.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.sbt.currency.R;
 import com.sbt.currency.app.CurrencyApp;
@@ -54,6 +56,10 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.currencies_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(currenciesAdapter);
+
+        view.findViewById(R.id.currencies_fab).setOnClickListener(this::onFabClicked);
+        ((EditText)view.findViewById(R.id.amount_field)).addTextChangedListener(new TextChangeListener(currenciesPresenter::onAmountChanged) );
+        ((EditText)view.findViewById(R.id.search_field)).addTextChangedListener(new TextChangeListener(currenciesPresenter::onSearchChanged) );
     }
 
     @Override
@@ -82,6 +88,10 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
     @Override
     public boolean isViewVisible() {
         return isVisible();
+    }
+
+    public void onFabClicked(View view) {
+        currenciesPresenter.onFabClicked();
     }
 
 }

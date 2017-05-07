@@ -44,12 +44,12 @@
                     android:layout_height="wrap_content">
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/amount_field"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
                         <EditText
+                            android:id="@+id/amount_field"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/amount"
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/editText"
+                        android:id="@+id/search_field"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
@@ -125,6 +125,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/currencies_fab"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

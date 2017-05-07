@@ -71,4 +71,15 @@ public class CurrenciesPresenter {
     }
 
 
+    public void onFabClicked() {
+
+    }
+
+    public void onAmountChanged(String amount) {
+
+    }
+
+    public void onSearchChanged(String s) {
+
+    }
 }
