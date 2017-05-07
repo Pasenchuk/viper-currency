@@ -19,49 +19,30 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CurrenciesFragment extends Fragment {
+public class CurrenciesFragment extends Fragment implements CurrenciesView {
 
 
-    private CurrenciesAdapter currenciesAdapter;
-    private CurrenciesPresenter currenciesPresenter;
+    CurrenciesAdapter currenciesAdapter;
+
+    CurrenciesPresenter currenciesPresenter;
+
+
 
     public CurrenciesFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        currenciesPresenter = new CurrenciesPresenter(this, ((CurrencyApp) getActivity().getApplication()).getAppModule());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_curencies, container, false);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        currenciesPresenter = new CurrenciesPresenter(new CurrenciesView() {
-            @Override
-            public void showPrimaryCurrency(DisplayCurrency currency) {
-
-            }
-
-            @Override
-            public void showSecondaryCurrency(DisplayCurrency currency) {
-
-            }
-
-            @Override
-            public void updateCurrencies(List<DisplayCurrency> currencies) {
-                if (CurrenciesFragment.this.isVisible())
-                    currenciesAdapter.setDisplayCurrencies(currencies);
-            }
-
-            @Override
-            public boolean isVisible() {
-                return CurrenciesFragment.this.isVisible();
-            }
-        }, ((CurrencyApp) getActivity().getApplication()).getAppModule());
     }
 
     @Override
@@ -79,6 +60,28 @@ public class CurrenciesFragment extends Fragment {
     public void onStart() {
         super.onStart();
         currenciesPresenter.onStart();
+    }
+
+
+    @Override
+    public void showPrimaryCurrency(DisplayCurrency currency) {
+
+    }
+
+    @Override
+    public void showSecondaryCurrency(DisplayCurrency currency) {
+
+    }
+
+    @Override
+    public void updateCurrencies(List<DisplayCurrency> currencies) {
+        if (CurrenciesFragment.this.isViewVisible())
+            currenciesAdapter.setDisplayCurrencies(currencies);
+    }
+
+    @Override
+    public boolean isViewVisible() {
+        return isVisible();
     }
 
 }

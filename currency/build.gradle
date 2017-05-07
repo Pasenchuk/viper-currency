@@ -9,7 +9,11 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+
+        jackOptions {
+            enabled true
+        }
     }
     buildTypes {
         release {
@@ -20,6 +24,11 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

@@ -51,9 +51,9 @@ public class CurrenciesPresenter {
                 rawCurrencies.add(defaultRubInstance);
 
                 final ArrayList<DisplayCurrency> displayCurrencies = new ArrayList<>(rawCurrencies.size());
-                for (Valute rawCurrency : rawCurrencies) {
+                for (Valute rawCurrency : rawCurrencies)
                     displayCurrencies.add(new DisplayCurrency(rawCurrency, defaultRubInstance));
-                }
+
 
                 currenciesView.updateCurrencies(displayCurrencies);
             }

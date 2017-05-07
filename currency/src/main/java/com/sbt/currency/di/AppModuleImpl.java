@@ -38,12 +38,7 @@ public class AppModuleImpl implements AppModule {
 
     @Override
     public NetworkRepository getNetworkRepository() {
-        return new NetworkRepository() {
-            @Override
-            public CurrencyXmlRequest getCurrencyXmlRequest() {
-                return new CurrencyXmlRequestImpl();
-            }
-        };
+        return CurrencyXmlRequestImpl::new;
     }
 
     @Override

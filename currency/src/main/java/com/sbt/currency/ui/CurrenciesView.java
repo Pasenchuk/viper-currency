@@ -17,6 +17,6 @@ public interface CurrenciesView {
 
     void updateCurrencies(List<DisplayCurrency> currencies);
 
-    boolean isVisible();
+    boolean isViewVisible();
 
 }
