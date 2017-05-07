@@ -2,6 +2,7 @@ package com.sbt.currency.ui;
 
 import com.sbt.currency.di.AppModule;
 import com.sbt.currency.domain.DisplayCurrency;
+import com.sbt.currency.domain.DisplayCurrencyFactory;
 import com.sbt.currency.domain.ValCurs;
 import com.sbt.currency.domain.Valute;
 import com.sbt.currency.exceptions.RequestError;
@@ -52,7 +53,7 @@ public class CurrenciesPresenter {
 
                 final ArrayList<DisplayCurrency> displayCurrencies = new ArrayList<>(rawCurrencies.size());
                 for (Valute rawCurrency : rawCurrencies)
-                    displayCurrencies.add(new DisplayCurrency(rawCurrency, defaultRubInstance));
+                    displayCurrencies.add(DisplayCurrencyFactory.getListCurrency(rawCurrency, defaultRubInstance));
 
 
                 currenciesView.updateCurrencies(displayCurrencies);

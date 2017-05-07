@@ -1,56 +1,24 @@
 package com.sbt.currency.domain;
 
-import com.sbt.currency.interactors.transformers.CurrencyFormatTransformer;
-
 /**
  * Created by Pasenchuk Victor on 02/05/2017
  */
 
 public class DisplayCurrency {
 
-    private int numCode;
+    int numCode;
 
-    private String charCode = "";
+    String charCode = "";
 
-    private String name = "";
+    String name = "";
 
-    private String nominal = "";
+    String nominal = "";
 
-    private String displayValue = "";
+    String displayValue = "";
 
-    private String displayNominalValue = "";
+    String displayNominalValue = "";
 
-    private String primaryCharCode;
-    private CurrencyFormatTransformer currencyFormatTransformer = new CurrencyFormatTransformer();
-
-    public DisplayCurrency(Valute currency) {
-        numCode = currency.getNumCode();
-        charCode = currency.getCharCode();
-        name = currency.getName();
-        nominal = String.valueOf(currency.getNominal());
-    }
-
-    public DisplayCurrency(Valute currency, Valute convertTo) {
-        this(currency);
-
-        primaryCharCode = convertTo.getCharCode();
-        displayNominalValue = currencyFormatTransformer.write(getExchangeNominalValue(currency, convertTo));
-    }
-
-    public DisplayCurrency(Valute currency, Valute convertTo, double amount) {
-        this(currency, convertTo);
-        
-        displayValue = currencyFormatTransformer.write(getExchangeValue(currency, convertTo, amount));
-    }
-
-
-    static double getExchangeValue(Valute currency, Valute convertTo, double amount) {
-        return (currency.value / currency.nominal) / (convertTo.value / convertTo.nominal) * amount;
-    }
-
-    static double getExchangeNominalValue(Valute currency, Valute convertTo) {
-        return currency.value / convertTo.value;
-    }
+    String primaryCharCode = "";
 
     public int getNumCode() {
         return numCode;
