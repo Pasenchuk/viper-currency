@@ -22,7 +22,7 @@ public class CurrenciesInteractor {
 
     final LocalRepository localRepository;
     final LoggingRepository loggingRepository;
-    private final NetworkRepository networkRepository;
+    final NetworkRepository networkRepository;
     private final Persister serializer;
 
     public CurrenciesInteractor(AppModule appModule) {
@@ -43,16 +43,7 @@ public class CurrenciesInteractor {
     }
 
     public Subscribtion enqueueCurrencies(final Subscriber<ValCurs, RequestError> subscriber) {
-        final String localCurrencyXml = localRepository.getCurrencyXml();
-
-        if (localCurrencyXml != null) {
-            try {
-                subscriber.onNext(getCurrenciesFromXml(localCurrencyXml));
-            } catch (Exception e) {
-                loggingRepository.logError("Can't load XML from preferences");
-            }
-        }
-        loggingRepository.log("No XML in preferences");
+        localLookup(subscriber);
 
         return networkRepository
                 .getCurrencyXmlRequest()
@@ -72,6 +63,19 @@ public class CurrenciesInteractor {
                         subscriber.onComplete();
                     }
                 });
+    }
+
+    void localLookup(Subscriber<ValCurs, RequestError> subscriber) {
+        final String localCurrencyXml = localRepository.getCurrencyXml();
+
+        if (localCurrencyXml != null) {
+            try {
+                subscriber.onNext(getCurrenciesFromXml(localCurrencyXml));
+            } catch (Exception e) {
+                loggingRepository.logError("Can't load XML from preferences");
+            }
+        }
+        loggingRepository.log("No XML in preferences");
     }
 
 
