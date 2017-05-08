@@ -85,4 +85,8 @@ public class CurrenciesPresenter {
     public void onSearchChanged(String s) {
 
     }
+
+    public void onCurrencySelected(int numCode) {
+
+    }
 }

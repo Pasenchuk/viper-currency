@@ -17,7 +17,6 @@ public class TextChangeListener implements TextWatcher {
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
     }
 
     @Override
@@ -28,7 +27,6 @@ public class TextChangeListener implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-
     }
 
     interface TextListener {

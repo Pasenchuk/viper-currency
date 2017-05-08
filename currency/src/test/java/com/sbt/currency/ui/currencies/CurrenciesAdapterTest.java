@@ -73,6 +73,8 @@ public class CurrenciesAdapterTest extends BaseTest {
         Mockito.verify(holder.exchangeValue).setText("58,54");
         Mockito.verify(holder.primaryCharCode).setText("RUB");
 
+        Assert.assertEquals(holder.numCode, 840);
+
         holder = new CurrencyHolderMock().getHolder();
         currenciesAdapter.displayCurrencies = displayCurrenciesKzt;
         currenciesAdapter.onBindViewHolder(holder, 2);
@@ -81,6 +83,8 @@ public class CurrenciesAdapterTest extends BaseTest {
         Mockito.verify(holder.nominal).setText("100");
         Mockito.verify(holder.exchangeValue).setText("494,73");
         Mockito.verify(holder.primaryCharCode).setText("KZT");
+
+        Assert.assertEquals(holder.numCode, 356);
 
     }
 
@@ -94,7 +98,7 @@ public class CurrenciesAdapterTest extends BaseTest {
     @Test
     public void testGetItemCount() throws Exception {
         currenciesAdapter.displayCurrencies = displayCurrenciesKzt;
-        Assert.assertEquals(currenciesAdapter.getItemCount(), 4);
+        Assert.assertEquals(currenciesAdapter.getItemId(0), 840);
 
     }
 
@@ -123,7 +127,9 @@ public class CurrenciesAdapterTest extends BaseTest {
             Mockito.when(itemView.findViewById(R.id.exchange_value)).thenReturn(exchangeValue);
             Mockito.when(itemView.findViewById(R.id.primary_char_code)).thenReturn(primaryCharCode);
 
-            return new CurrenciesAdapter.CurrencyHolder(itemView);
+            Mockito.when(itemView.findViewById(R.id.currency_list_container)).thenReturn(itemView);
+
+            return new CurrenciesAdapter.CurrencyHolder(itemView, presenter);
         }
     }
 

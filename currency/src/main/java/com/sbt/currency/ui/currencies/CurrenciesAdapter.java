@@ -31,11 +31,9 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Cu
 
     @Override
     public CurrencyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-
-        View view = inflater.inflate(R.layout.item_currency, parent, false);
-
-        return new CurrencyHolder(view);
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        final View view = inflater.inflate(R.layout.item_currency, parent, false);
+        return new CurrencyHolder(view, presenter);
     }
 
     @Override
@@ -47,6 +45,8 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Cu
         holder.name.setText(displayCurrency.getName());
         holder.exchangeValue.setText(displayCurrency.getDisplayNominalValue());
         holder.primaryCharCode.setText(displayCurrency.getPrimaryCharCode());
+
+        holder.numCode = displayCurrency.getNumCode();
     }
 
     @Override
@@ -72,8 +72,9 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Cu
         TextView exchangeValue;
         TextView primaryCharCode;
 
+        int numCode;
 
-        CurrencyHolder(View itemView) {
+        CurrencyHolder(View itemView, final CurrenciesPresenter presenter) {
             super(itemView);
 
             charCode = (TextView) itemView.findViewById(R.id.char_code);
@@ -81,6 +82,9 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Cu
             name = (TextView) itemView.findViewById(R.id.name);
             exchangeValue = (TextView) itemView.findViewById(R.id.exchange_value);
             primaryCharCode = (TextView) itemView.findViewById(R.id.primary_char_code);
+
+
+            itemView.findViewById(R.id.currency_list_container).setOnClickListener(v -> presenter.onCurrencySelected(numCode));
         }
     }
 
