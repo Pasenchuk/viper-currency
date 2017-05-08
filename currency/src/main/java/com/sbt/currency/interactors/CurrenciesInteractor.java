@@ -82,8 +82,7 @@ public class CurrenciesInteractor {
                 localRepository.setCurrencyXml(s);
             } catch (Exception e) {
                 loggingRepository.logError("Can't load XML from network");
-                subscriber.onError(new RequestError(new IllegalStateException(), RequestError.Kind.XML_PARSE_ERROR));
-                throw new IllegalStateException(e);
+                subscriber.onError(new RequestError(e, RequestError.Kind.XML_PARSE_ERROR));
             }
         } else
             subscriber.onError(new RequestError(new IllegalStateException(), RequestError.Kind.XML_PARSE_ERROR));

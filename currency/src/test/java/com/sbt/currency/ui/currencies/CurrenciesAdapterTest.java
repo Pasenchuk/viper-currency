@@ -102,7 +102,7 @@ public class CurrenciesAdapterTest extends BaseTest {
 
     }
 
-    class CurrencyHolderMock {
+    private class CurrencyHolderMock {
 
         @Mock
         TextView charCode;
@@ -118,7 +118,7 @@ public class CurrenciesAdapterTest extends BaseTest {
         @Mock
         View itemView;
 
-        public CurrenciesAdapter.CurrencyHolder getHolder() {
+        CurrenciesAdapter.CurrencyHolder getHolder() {
             MockitoAnnotations.initMocks(this);
 
             Mockito.when(itemView.findViewById(R.id.char_code)).thenReturn(charCode);
