@@ -3,8 +3,8 @@ package com.sbt.currency.interactors;
 import com.sbt.currency.di.AppModule;
 import com.sbt.currency.domain.ValCurs;
 import com.sbt.currency.exceptions.RequestError;
-import com.sbt.currency.interactors.transformers.DateFormatTransformer;
 import com.sbt.currency.interactors.transformers.CurrencyFormatTransformer;
+import com.sbt.currency.interactors.transformers.DateFormatTransformer;
 import com.sbt.currency.repository.LocalRepository;
 import com.sbt.currency.repository.LoggingRepository;
 import com.sbt.currency.repository.NetworkRepository;
@@ -20,10 +20,10 @@ import java.util.Date;
 
 public class CurrenciesInteractor {
 
-    private final LocalRepository localRepository;
+    final LocalRepository localRepository;
+    final LoggingRepository loggingRepository;
     private final NetworkRepository networkRepository;
     private final Persister serializer;
-    private final LoggingRepository loggingRepository;
 
     public CurrenciesInteractor(AppModule appModule) {
         localRepository = appModule.getLocalRepository();
@@ -80,12 +80,15 @@ public class CurrenciesInteractor {
             try {
                 subscriber.onNext(getCurrenciesFromXml(s));
                 localRepository.setCurrencyXml(s);
+                subscriber.onComplete();
             } catch (Exception e) {
-                loggingRepository.logError("Can't load XML from network");
+                loggingRepository.logError("Can't parse XML from network");
                 subscriber.onError(new RequestError(e, RequestError.Kind.XML_PARSE_ERROR));
             }
-        } else
+        } else {
+            loggingRepository.logError("NULL XML from network");
             subscriber.onError(new RequestError(new IllegalStateException(), RequestError.Kind.XML_PARSE_ERROR));
+        }
     }
 
 

@@ -14,6 +14,8 @@ import com.sbt.currency.repository.LoggingRepository;
 import com.sbt.currency.repository.NetworkRepository;
 import com.sbt.currency.repository.implementations.LocalRepositoryImpl;
 
+import org.mockito.Mockito;
+
 import static com.sbt.currency.repository.implementations.LocalRepositoryImpl.CURRENCIES_PREFS;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -30,7 +32,8 @@ public class MockModule implements AppModule {
         final Context context = mock(Context.class);
         final SharedPreferences sharedPreferences = new SharedPreferencesMock().getSharedPreferences();
         when(context.getSharedPreferences(CURRENCIES_PREFS, Context.MODE_PRIVATE)).thenReturn(sharedPreferences);
-        return new LocalRepositoryImpl(context);
+        final LocalRepositoryImpl localRepository = new LocalRepositoryImpl(context);
+        return Mockito.spy(localRepository);
     }
 
     @Override
@@ -99,7 +102,7 @@ public class MockModule implements AppModule {
 
     @Override
     public LoggingRepository getLoggingRepository() {
-        return new LoggingRepository() {
+        final LoggingRepository loggingRepository = new LoggingRepository() {
             @Override
             public void log(String tag, Object message) {
                 System.out.println("Tag: " + tag + " : " + String.valueOf(message));
@@ -120,6 +123,7 @@ public class MockModule implements AppModule {
                 System.out.println("ERROR: Tag: " + new Exception().getStackTrace()[1].getClassName() + " : " + String.valueOf(message));
             }
         };
+        return Mockito.spy(loggingRepository);
     }
 
     @Override
