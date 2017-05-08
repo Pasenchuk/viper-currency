@@ -24,10 +24,10 @@ public class CurrencyFormatTransformerTest {
     @Test
     public void testWrite() throws Exception {
 
-        assertEquals(currencyFormatTransformer.write(0d), "0");
-        assertEquals(currencyFormatTransformer.write(1d), "1");
-        assertEquals(currencyFormatTransformer.write(-1d), "-1");
-        assertEquals(currencyFormatTransformer.write(1.0), "1");
+        assertEquals(currencyFormatTransformer.write(0d), "0,00");
+        assertEquals(currencyFormatTransformer.write(1d), "1,00");
+        assertEquals(currencyFormatTransformer.write(-1d), "-1,00");
+        assertEquals(currencyFormatTransformer.write(1.0), "1,00");
         assertEquals(currencyFormatTransformer.write(42.6125), "42,61");
 
     }
