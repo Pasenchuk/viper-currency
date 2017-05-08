@@ -24,7 +24,7 @@ public class AmountFormatTransformer implements Transform<Double> {
     }
 
     @Override
-    public String write(Double value)  {
+    public String write(Double value) {
         return numberFormat.format(value);
     }
 

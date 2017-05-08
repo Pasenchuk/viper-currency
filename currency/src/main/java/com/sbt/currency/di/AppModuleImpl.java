@@ -3,13 +3,12 @@ package com.sbt.currency.di;
 import android.content.Context;
 
 import com.sbt.currency.interactors.CurrenciesInteractor;
-import com.sbt.currency.repository.LoggingRepository;
-import com.sbt.currency.repository.CurrencyXmlRequest;
 import com.sbt.currency.repository.LocalRepository;
-import com.sbt.currency.repository.implementations.LoggingRepositoryImpl;
+import com.sbt.currency.repository.LoggingRepository;
 import com.sbt.currency.repository.NetworkRepository;
 import com.sbt.currency.repository.implementations.CurrencyXmlRequestImpl;
 import com.sbt.currency.repository.implementations.LocalRepositoryImpl;
+import com.sbt.currency.repository.implementations.LoggingRepositoryImpl;
 
 /**
  * Created by Pasenchuk Victor on 29/04/2017

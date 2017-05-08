@@ -1,8 +1,8 @@
 package com.sbt.currency.di;
 
 import com.sbt.currency.interactors.CurrenciesInteractor;
-import com.sbt.currency.repository.LoggingRepository;
 import com.sbt.currency.repository.LocalRepository;
+import com.sbt.currency.repository.LoggingRepository;
 import com.sbt.currency.repository.NetworkRepository;
 
 /**
