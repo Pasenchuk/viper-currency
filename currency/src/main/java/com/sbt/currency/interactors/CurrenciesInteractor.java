@@ -55,6 +55,7 @@ public class CurrenciesInteractor {
 
                     @Override
                     public void onError(RequestError requestError) {
+                        loggingRepository.logError("Failed to load XML from server!");
                         subscriber.onError(requestError);
                     }
 

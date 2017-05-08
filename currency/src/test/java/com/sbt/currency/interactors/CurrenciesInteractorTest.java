@@ -15,7 +15,6 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -34,24 +33,19 @@ public class CurrenciesInteractorTest extends BaseTest {
     private Subscriber<ValCurs, RequestError> subscriber;
     private InOrder inOrder;
 
-    @BeforeClass
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
 
+    @BeforeMethod
+    public void beforeMethod() throws Exception {
         final CurrenciesInteractor interactor = new CurrenciesInteractor(new MockModule());
         currenciesInteractor = Mockito.spy(interactor);
 
         localRepository = currenciesInteractor.localRepository;
         loggingRepository = currenciesInteractor.loggingRepository;
         networkRepository = (MockNetworkRepository) currenciesInteractor.networkRepository;
-    }
 
-    @BeforeMethod
-    public void beforeMethod() throws Exception {
-        Mockito.reset(currenciesInteractor, subscriber, localRepository, loggingRepository, networkRepository);
+        Mockito.reset(subscriber);
+
         inOrder = Mockito.inOrder(localRepository, loggingRepository, networkRepository, subscriber);
-        localRepository.clear();
     }
 
     @Test
@@ -73,7 +67,26 @@ public class CurrenciesInteractorTest extends BaseTest {
 
         runMockRequest();
 
-        Mockito.verify(subscriber, Mockito.after(150)).onError(Mockito.any());
+        Mockito.verify(loggingRepository, Mockito.after(150)).logError("Failed to load XML from server!");
+
+        final ArgumentCaptor<RequestError> requestErrorArgumentCaptor = ArgumentCaptor.forClass(RequestError.class);
+        Mockito.verify(subscriber, Mockito.after(150)).onError(requestErrorArgumentCaptor.capture());
+        Assert.assertEquals(requestErrorArgumentCaptor.getValue().getKind(), RequestError.Kind.IO_ERROR);
+
+    }
+
+    @Test
+    public void testCorruptXMLEnqueueCurrencies() throws Exception {
+        networkRepository.setReturnError(false);
+        networkRepository.setXmlForReturn("asd");
+
+        runMockRequest();
+
+        Mockito.verify(loggingRepository, Mockito.after(150)).logError("Can't parse XML from network");
+
+        final ArgumentCaptor<RequestError> requestErrorArgumentCaptor = ArgumentCaptor.forClass(RequestError.class);
+        Mockito.verify(subscriber, Mockito.after(150)).onError(requestErrorArgumentCaptor.capture());
+        Assert.assertEquals(requestErrorArgumentCaptor.getValue().getKind(), RequestError.Kind.XML_PARSE_ERROR);
 
     }
 
