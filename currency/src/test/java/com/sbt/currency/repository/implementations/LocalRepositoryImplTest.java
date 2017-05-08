@@ -2,6 +2,7 @@ package com.sbt.currency.repository.implementations;
 
 import android.content.Context;
 
+import com.sbt.currency.mocks.Currencies;
 import com.sbt.currency.mocks.MockModule;
 import com.sbt.currency.repository.LocalRepository;
 
@@ -37,8 +38,8 @@ public class LocalRepositoryImplTest {
     public void testCurrencyXml() throws Exception {
         Assert.assertNull(localRepository.getCurrencyXml());
 
-        localRepository.setCurrencyXml("asd");
-        Assert.assertEquals(localRepository.getCurrencyXml(), "asd");
+        localRepository.setCurrencyXml(Currencies.CURRENCY_XML);
+        Assert.assertEquals(localRepository.getCurrencyXml(), Currencies.CURRENCY_XML);
 
 
         localRepository.setCurrencyXml(null);

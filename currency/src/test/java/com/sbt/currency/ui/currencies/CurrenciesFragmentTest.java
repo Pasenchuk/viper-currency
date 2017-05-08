@@ -1,8 +1,13 @@
 package com.sbt.currency.ui.currencies;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sbt.currency.R;
 import com.sbt.currency.domain.DisplayCurrency;
 import com.sbt.currency.domain.DisplayCurrencyFactory;
 import com.sbt.currency.mocks.Currencies;
@@ -140,6 +145,24 @@ public class CurrenciesFragmentTest {
         currenciesFragment.updateCurrencies(displayCurrencies);
 
         Mockito.verify(currenciesAdapter).setDisplayCurrencies(displayCurrencies);
+    }
+
+    @Test
+    public void testOnCreateView() throws Exception {
+        final LayoutInflater inflater = Mockito.mock(LayoutInflater.class);
+        final ViewGroup viewGroup = Mockito.mock(ViewGroup.class);
+        currenciesFragment.onCreateView(
+                inflater,
+                viewGroup,
+                Mockito.mock(Bundle.class)
+        );
+        Mockito.verify(inflater).inflate(R.layout.fragment_curencies, viewGroup, false);
+    }
+
+    @Test
+    public void testOnFabClicked() throws Exception {
+        currenciesFragment.onFabClicked(Mockito.mock(View.class));
+        Mockito.verify(currenciesPresenter).onFabClicked();
     }
 
 }

@@ -29,24 +29,15 @@ public class ValCurs {
         return valute;
     }
 
-    public void setValute(List<Valute> valute) {
-        this.valute = valute;
-    }
 
     public Date getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
 }

@@ -46,24 +46,12 @@ public class Valute {
         return numCode;
     }
 
-    public void setNumCode(int numCode) {
-        this.numCode = numCode;
-    }
-
     public String getCharCode() {
         return charCode;
     }
 
-    public void setCharCode(String charCode) {
-        this.charCode = charCode;
-    }
-
     public int getNominal() {
         return nominal;
-    }
-
-    public void setNominal(int nominal) {
-        this.nominal = nominal;
     }
 
     public String getName() {
@@ -78,16 +66,8 @@ public class Valute {
         return value;
     }
 
-    public void setValue(double value) {
-        this.value = value;
-    }
-
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
 }
