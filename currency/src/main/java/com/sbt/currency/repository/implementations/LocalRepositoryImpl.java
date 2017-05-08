@@ -75,4 +75,12 @@ public class LocalRepositoryImpl implements LocalRepository {
                 .putFloat(AMOUNT_KEY, amount)
                 .apply();
     }
+
+    @Override
+    public void clear() {
+        sharedPreferences
+                .edit()
+                .clear()
+                .apply();
+    }
 }

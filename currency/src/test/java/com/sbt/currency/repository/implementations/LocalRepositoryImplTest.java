@@ -80,4 +80,20 @@ public class LocalRepositoryImplTest extends BaseTest {
 
     }
 
+    @Test
+    public void testClear() throws Exception {
+        localRepository.setAmount(10.f);
+        localRepository.setCurrencyXml(Currencies.CURRENCY_XML);
+        localRepository.setPrimaryCurrencyId(820);
+        localRepository.setSecondaryCurrencyId(840);
+
+        localRepository.clear();
+
+        Assert.assertEquals(localRepository.getAmount(), 0f);
+        Assert.assertEquals(localRepository.getPrimaryCurrencyId(), NO_ID);
+        Assert.assertEquals(localRepository.getSecondaryCurrencyId(), NO_ID);
+        Assert.assertEquals(localRepository.getCurrencyXml(), null);
+
+    }
+
 }

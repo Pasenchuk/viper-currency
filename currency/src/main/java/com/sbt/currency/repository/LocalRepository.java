@@ -6,7 +6,7 @@ package com.sbt.currency.repository;
 
 public interface LocalRepository {
 
-    public static final int NO_ID = -1;
+    int NO_ID = -1;
 
     String getCurrencyXml();
 
@@ -23,5 +23,7 @@ public interface LocalRepository {
     float getAmount();
 
     void setAmount(float amount);
+
+    void clear();
 
 }

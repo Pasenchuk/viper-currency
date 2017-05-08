@@ -72,10 +72,10 @@ public class CurrenciesInteractor {
             try {
                 subscriber.onNext(getCurrenciesFromXml(localCurrencyXml));
             } catch (Exception e) {
-                loggingRepository.logError("Can't load XML from preferences");
+                loggingRepository.logError("Can't parse XML from preferences");
             }
-        }
-        loggingRepository.log("No XML in preferences");
+        } else
+            loggingRepository.log("No XML in preferences");
     }
 
 

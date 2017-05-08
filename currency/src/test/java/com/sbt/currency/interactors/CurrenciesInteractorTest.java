@@ -53,12 +53,36 @@ public class CurrenciesInteractorTest extends BaseTest {
     public void beforeMethod() throws Exception {
         Mockito.reset(subscriber, localRepository, loggingRepository, networkRepository);
         inOrder = Mockito.inOrder(localRepository, loggingRepository, networkRepository, subscriber);
+        localRepository.clear();
     }
 
     @Test
     public void testEnqueueCurrencies() throws Exception {
         currenciesInteractor.enqueueCurrencies(subscriber);
 
+    }
+
+    @Test
+    public void testLocalLookup() throws Exception {
+        localRepository.setCurrencyXml(Currencies.CURRENCY_XML);
+        currenciesInteractor.localLookup(subscriber);
+
+        Mockito.verify(subscriber).onNext(Mockito.any(ValCurs.class));
+    }
+
+    @Test
+    public void testNullLocalLookup() throws Exception {
+        currenciesInteractor.localLookup(subscriber);
+
+        inOrder.verify(loggingRepository).log("No XML in preferences");
+    }
+
+    @Test
+    public void testCorruptLocalLookup() throws Exception {
+        localRepository.setCurrencyXml("asd");
+        currenciesInteractor.localLookup(subscriber);
+
+        inOrder.verify(loggingRepository).logError("Can't parse XML from preferences");
     }
 
     @Test

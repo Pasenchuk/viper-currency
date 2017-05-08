@@ -38,6 +38,8 @@ public class SharedPreferencesMock extends KeyValueMock {
         keyValueSetterMock(when(editor.putInt(anyString(), anyInt())));
         keyValueSetterMock(when(editor.putLong(anyString(), anyLong())));
         keyValueSetterMock(when(editor.putString(anyString(), anyString())));
+        
+        clearStorage(when(editor.clear()));
     }
 
     public SharedPreferences getSharedPreferences() {
