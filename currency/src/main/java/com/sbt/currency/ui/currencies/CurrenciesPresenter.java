@@ -25,18 +25,18 @@ import java.util.List;
 
 public class CurrenciesPresenter {
 
-    private final CurrenciesView currenciesView;
+    final CurrenciesInteractor currenciesInteractor;
+    final LoggingRepository loggingRepository;
+    final LocalRepository localRepository;
 
-    private final CurrenciesInteractor currenciesInteractor;
-    private final LoggingRepository loggingRepository;
-    private final LocalRepository localRepository;
+    private final CurrenciesView currenciesView;
     private final Valute defaultRubInstance;
     private final AmountFormatTransformer amountFormatTransformer;
     Valute primaryCurrency, secondaryCurrency;
-    private Subscribtion subscribtion;
-    private List<Valute> rawCurrencies;
-    private String query = "";
-    private boolean hasData = false;
+    Subscribtion subscribtion;
+    List<Valute> rawCurrencies;
+    String query = "";
+    boolean hasData = false;
 
     public CurrenciesPresenter(CurrenciesView currenciesView, AppModule appModule) {
         this.currenciesView = currenciesView;
@@ -60,7 +60,7 @@ public class CurrenciesPresenter {
 
     }
 
-    private void queryForCurrencies() {
+    void queryForCurrencies() {
         subscribtion = currenciesInteractor.enqueueCurrencies(new Subscriber<ValCurs, RequestError>() {
             @Override
             public void onNext(ValCurs valCurs) {
@@ -78,7 +78,7 @@ public class CurrenciesPresenter {
         });
     }
 
-    private void onCurrenciesResponse(ValCurs valCurs) {
+    void onCurrenciesResponse(ValCurs valCurs) {
         hasData = true;
         rawCurrencies = valCurs.getValute();
         if (currenciesView.isViewVisible()) {
@@ -87,7 +87,7 @@ public class CurrenciesPresenter {
         }
     }
 
-    private void updateCurrencies() {
+    void updateCurrencies() {
 
         initMainCurrencies();
 
@@ -97,12 +97,12 @@ public class CurrenciesPresenter {
         }
     }
 
-    private void showMainCurrencies() {
+    void showMainCurrencies() {
         currenciesView.showPrimaryCurrency(DisplayCurrencyFactory.getPrimaryCurrency(primaryCurrency));
         currenciesView.showSecondaryCurrency(DisplayCurrencyFactory.getSecondaryCurrency(secondaryCurrency, primaryCurrency, localRepository.getAmount()));
     }
 
-    private void initMainCurrencies() {
+    void initMainCurrencies() {
         final int primaryCurrencyId = localRepository.getPrimaryCurrencyId();
         final int secondaryCurrencyId = localRepository.getSecondaryCurrencyId();
 
@@ -122,7 +122,7 @@ public class CurrenciesPresenter {
                 hasData = false;
     }
 
-    private void initListCurrencies() {
+    void initListCurrencies() {
         final ArrayList<DisplayCurrency> displayCurrencies = new ArrayList<>(rawCurrencies.size() - 1);
 
         if (filterCurrency(defaultRubInstance))
@@ -151,18 +151,18 @@ public class CurrenciesPresenter {
     }
 
 
-    private void presetMainCurrency() {
+    void presetMainCurrency() {
         final int primaryCurrencyId = localRepository.getPrimaryCurrencyId();
         if (primaryCurrencyId == LocalRepository.NO_ID || primaryCurrencyId == defaultRubInstance.getNumCode())
             currenciesView.showPrimaryCurrency(DisplayCurrencyFactory.getPrimaryCurrency(defaultRubInstance));
     }
 
-    private void presetAmount() {
+    void presetAmount() {
         final float amount = localRepository.getAmount();
         setAmount(amount);
     }
 
-    private void setAmount(double amount) {
+    void setAmount(double amount) {
         currenciesView.setAmount(amountFormatTransformer.write(amount));
     }
 

@@ -65,6 +65,7 @@ public class MockModule implements AppModule {
 
     @Override
     public CurrenciesInteractor getCurrenciesInteractor() {
-        return new CurrenciesInteractor(this);
+        final CurrenciesInteractor interactor = new CurrenciesInteractor(this);
+        return Mockito.spy(interactor);
     }
 }

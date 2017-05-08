@@ -12,6 +12,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import static com.sbt.currency.repository.LocalRepository.DOLLAR_ID;
 import static com.sbt.currency.repository.LocalRepository.NO_ID;
 
 /**
@@ -60,7 +61,7 @@ public class LocalRepositoryImplTest extends BaseTest {
 
     @Test
     public void testSecondaryCurrencyId() throws Exception {
-        Assert.assertEquals(localRepository.getSecondaryCurrencyId(), NO_ID);
+        Assert.assertEquals(localRepository.getSecondaryCurrencyId(), DOLLAR_ID);
 
         localRepository.setSecondaryCurrencyId(0);
         Assert.assertEquals(localRepository.getSecondaryCurrencyId(), 0);
@@ -91,7 +92,7 @@ public class LocalRepositoryImplTest extends BaseTest {
 
         Assert.assertEquals(localRepository.getAmount(), 1f);
         Assert.assertEquals(localRepository.getPrimaryCurrencyId(), NO_ID);
-        Assert.assertEquals(localRepository.getSecondaryCurrencyId(), NO_ID);
+        Assert.assertEquals(localRepository.getSecondaryCurrencyId(), DOLLAR_ID);
         Assert.assertEquals(localRepository.getCurrencyXml(), null);
 
     }
