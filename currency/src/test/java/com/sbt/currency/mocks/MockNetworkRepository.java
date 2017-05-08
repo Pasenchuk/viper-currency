@@ -34,7 +34,7 @@ public class MockNetworkRepository implements NetworkRepository {
                     subscribed = true;
                     new Thread(() -> {
                         try {
-                            Thread.sleep(250);
+                            Thread.sleep(100);
                             if (subscribed) {
                                 if (returnError)
                                     subscriber.onError(new RequestError(new IOError(new IllegalStateException()), RequestError.Kind.IO_ERROR));

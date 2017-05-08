@@ -60,7 +60,6 @@ public class CurrenciesInteractor {
 
                     @Override
                     public void onComplete() {
-                        subscriber.onComplete();
                     }
                 });
     }

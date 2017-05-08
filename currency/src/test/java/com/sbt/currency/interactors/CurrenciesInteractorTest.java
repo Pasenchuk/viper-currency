@@ -11,7 +11,6 @@ import com.sbt.currency.repository.LocalRepository;
 import com.sbt.currency.repository.LoggingRepository;
 
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -33,8 +32,6 @@ public class CurrenciesInteractorTest extends BaseTest {
 
     @Mock
     private Subscriber<ValCurs, RequestError> subscriber;
-    @Captor
-    private ArgumentCaptor<Subscriber<String, RequestError>> captor;
     private InOrder inOrder;
 
     @BeforeClass
@@ -59,9 +56,28 @@ public class CurrenciesInteractorTest extends BaseTest {
 
     @Test
     public void testEnqueueCurrencies() throws Exception {
+        networkRepository.setReturnError(false);
+        networkRepository.setXmlForReturn(Currencies.CURRENCY_XML);
+
+        runMockRequest();
+
+        Mockito.verify(currenciesInteractor, Mockito.after(150)).onNetworkResult(Currencies.CURRENCY_XML, subscriber);
+        Mockito.verify(subscriber, Mockito.after(150)).onComplete();
+
+    }
+
+    @Test
+    public void testErrorEnqueueCurrencies() throws Exception {
         networkRepository.setReturnError(true);
         networkRepository.setXmlForReturn(Currencies.CURRENCY_XML);
 
+        runMockRequest();
+
+        Mockito.verify(subscriber, Mockito.after(150)).onError(Mockito.any());
+
+    }
+
+    private void runMockRequest() {
         final CurrencyXmlRequest[] currencyXmlRequest = new CurrencyXmlRequest[1];
         Mockito.doAnswer(invocation -> {
             currencyXmlRequest[0] = (CurrencyXmlRequest) invocation.callRealMethod();
@@ -73,14 +89,7 @@ public class CurrenciesInteractorTest extends BaseTest {
         Mockito.verify(currenciesInteractor).localLookup(subscriber);
         Mockito.verify(networkRepository).getCurrencyXmlRequest();
 
-        Mockito.verify(currencyXmlRequest[0]).fetchXmlData(captor.capture());
-
-        final Subscriber<String, RequestError> value = captor.getValue();
-        final Subscriber<String, RequestError> requestErrorSubscriber = Mockito.spy(value);
-
-        Mockito.verify(requestErrorSubscriber, Mockito.after(1000)).onNext(Currencies.CURRENCY_XML);
-        Mockito.verify(requestErrorSubscriber).onComplete();
-
+        Mockito.verify(currencyXmlRequest[0]).fetchXmlData(Mockito.any());
     }
 
     @Test
