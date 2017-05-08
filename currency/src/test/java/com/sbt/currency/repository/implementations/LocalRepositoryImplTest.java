@@ -2,6 +2,7 @@ package com.sbt.currency.repository.implementations;
 
 import android.content.Context;
 
+import com.sbt.currency.BaseTest;
 import com.sbt.currency.mocks.Currencies;
 import com.sbt.currency.mocks.MockModule;
 import com.sbt.currency.repository.LocalRepository;
@@ -16,7 +17,7 @@ import static com.sbt.currency.repository.LocalRepository.NO_ID;
 /**
  * Created by Pasenchuk Victor on 06/05/2017
  */
-public class LocalRepositoryImplTest {
+public class LocalRepositoryImplTest extends BaseTest {
 
 
     private LocalRepository localRepository;
@@ -27,11 +28,10 @@ public class LocalRepositoryImplTest {
 
     @BeforeClass
     public void setUp() throws Exception {
+        super.setUp();
+
         final MockModule mockModule = new MockModule();
-
         localRepository = mockModule.getLocalRepository();
-
-
     }
 
     @Test

@@ -40,7 +40,7 @@ public class DisplayCurrencyFactory {
     }
 
     static double getExchangeNominalValue(Valute currency, Valute convertTo) {
-        return currency.value / convertTo.value;
+        return currency.value * convertTo.nominal / convertTo.value;
     }
 
 }

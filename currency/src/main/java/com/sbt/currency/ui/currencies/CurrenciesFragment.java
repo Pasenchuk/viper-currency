@@ -54,7 +54,7 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        currenciesAdapter = new CurrenciesAdapter();
+        currenciesAdapter = new CurrenciesAdapter(currenciesPresenter);
 
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.currencies_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

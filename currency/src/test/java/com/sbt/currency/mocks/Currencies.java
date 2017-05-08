@@ -50,9 +50,7 @@ public class Currencies {
         RUB = Valute.defaultRubInstance();
 
         try {
-            final List<Valute> valute = currenciesInteractor.getCurrenciesFromXml(
-                    CURRENCY_XML
-            ).getValute();
+            final List<Valute> valute = currenciesInteractor.getCurrenciesFromXml(CURRENCY_XML).getValute();
 
             USD = valute.get(0);
             EUR = valute.get(1);

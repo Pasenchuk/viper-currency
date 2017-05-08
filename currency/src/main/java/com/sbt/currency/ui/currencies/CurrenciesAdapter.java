@@ -18,9 +18,14 @@ import java.util.List;
 
 public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.CurrencyHolder> {
 
+    CurrenciesPresenter presenter;
     List<DisplayCurrency> displayCurrencies = new ArrayList<>();
 
-    public CurrenciesAdapter() {
+    CurrenciesAdapter() {
+    }
+
+    public CurrenciesAdapter(CurrenciesPresenter presenter) {
+        this.presenter = presenter;
         setHasStableIds(true);
     }
 
@@ -59,13 +64,14 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Cu
         notifyDataSetChanged();
     }
 
-    class CurrencyHolder extends RecyclerView.ViewHolder {
+    static class CurrencyHolder extends RecyclerView.ViewHolder {
 
         TextView charCode;
         TextView nominal;
         TextView name;
         TextView exchangeValue;
         TextView primaryCharCode;
+
 
         CurrencyHolder(View itemView) {
             super(itemView);

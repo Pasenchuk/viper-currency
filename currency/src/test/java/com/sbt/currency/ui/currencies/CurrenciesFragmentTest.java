@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sbt.currency.BaseTest;
 import com.sbt.currency.R;
 import com.sbt.currency.domain.DisplayCurrency;
 import com.sbt.currency.domain.DisplayCurrencyFactory;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
  * Created by Pasenchuk Victor on 08/05/2017
  */
 @SuppressLint("SetTextI18n")
-public class CurrenciesFragmentTest {
+public class CurrenciesFragmentTest extends BaseTest {
 
     @Mock
     CurrenciesAdapter currenciesAdapter;
@@ -45,12 +46,6 @@ public class CurrenciesFragmentTest {
 
     @InjectMocks
     CurrenciesFragment currenciesFragment;
-
-
-    @BeforeClass
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
