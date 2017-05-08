@@ -15,7 +15,7 @@ import java.io.IOError;
  */
 
 public class MockNetworkRepository implements NetworkRepository {
-    private boolean returnError;
+    private boolean returnError = false;
     private String xmlForReturn = Currencies.CURRENCY_XML;
 
 
@@ -31,6 +31,7 @@ public class MockNetworkRepository implements NetworkRepository {
 
                 if (firstLoad) {
                     firstLoad = false;
+                    subscribed = true;
                     new Thread(() -> {
                         try {
                             Thread.sleep(250);
@@ -47,7 +48,7 @@ public class MockNetworkRepository implements NetworkRepository {
 
                             subscriber.onError(new RequestError(e, RequestError.Kind.UNKNOWN_ERROR));
                         }
-                    }).run();
+                    }).start();
                 }
                 return this;
             }
