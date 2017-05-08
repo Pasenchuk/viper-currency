@@ -33,7 +33,7 @@ public class MockNetworkRepository implements NetworkRepository {
                     firstLoad = false;
                     new Thread(() -> {
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(250);
                             if (subscribed) {
                                 if (returnError)
                                     subscriber.onError(new RequestError(new IOError(new IllegalStateException()), RequestError.Kind.IO_ERROR));
@@ -47,7 +47,7 @@ public class MockNetworkRepository implements NetworkRepository {
 
                             subscriber.onError(new RequestError(e, RequestError.Kind.UNKNOWN_ERROR));
                         }
-                    });
+                    }).run();
                 }
                 return this;
             }

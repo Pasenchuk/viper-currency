@@ -5,11 +5,13 @@ import com.sbt.currency.domain.ValCurs;
 import com.sbt.currency.exceptions.RequestError;
 import com.sbt.currency.mocks.Currencies;
 import com.sbt.currency.mocks.MockModule;
+import com.sbt.currency.mocks.MockNetworkRepository;
+import com.sbt.currency.repository.CurrencyXmlRequest;
 import com.sbt.currency.repository.LocalRepository;
 import com.sbt.currency.repository.LoggingRepository;
-import com.sbt.currency.repository.NetworkRepository;
 
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -24,15 +26,15 @@ import org.testng.annotations.Test;
 public class CurrenciesInteractorTest extends BaseTest {
 
 
-    private MockModule appModule;
-
     private CurrenciesInteractor currenciesInteractor;
     private LocalRepository localRepository;
     private LoggingRepository loggingRepository;
-    private NetworkRepository networkRepository;
+    private MockNetworkRepository networkRepository;
 
     @Mock
     private Subscriber<ValCurs, RequestError> subscriber;
+    @Captor
+    private ArgumentCaptor<Subscriber<String, RequestError>> captor;
     private InOrder inOrder;
 
     @BeforeClass
@@ -40,25 +42,44 @@ public class CurrenciesInteractorTest extends BaseTest {
     public void setUp() throws Exception {
         super.setUp();
 
-        appModule = new MockModule();
-        final CurrenciesInteractor interactor = new CurrenciesInteractor(appModule);
+        final CurrenciesInteractor interactor = new CurrenciesInteractor(new MockModule());
         currenciesInteractor = Mockito.spy(interactor);
 
         localRepository = currenciesInteractor.localRepository;
         loggingRepository = currenciesInteractor.loggingRepository;
-        networkRepository = currenciesInteractor.networkRepository;
+        networkRepository = (MockNetworkRepository) currenciesInteractor.networkRepository;
     }
 
     @BeforeMethod
     public void beforeMethod() throws Exception {
-        Mockito.reset(subscriber, localRepository, loggingRepository, networkRepository);
+        Mockito.reset(currenciesInteractor, subscriber, localRepository, loggingRepository, networkRepository);
         inOrder = Mockito.inOrder(localRepository, loggingRepository, networkRepository, subscriber);
         localRepository.clear();
     }
 
     @Test
     public void testEnqueueCurrencies() throws Exception {
+        networkRepository.setReturnError(true);
+        networkRepository.setXmlForReturn(Currencies.CURRENCY_XML);
+
+        final CurrencyXmlRequest[] currencyXmlRequest = new CurrencyXmlRequest[1];
+        Mockito.doAnswer(invocation -> {
+            currencyXmlRequest[0] = (CurrencyXmlRequest) invocation.callRealMethod();
+            return currencyXmlRequest[0];
+        }).when(networkRepository).getCurrencyXmlRequest();
+
         currenciesInteractor.enqueueCurrencies(subscriber);
+
+        Mockito.verify(currenciesInteractor).localLookup(subscriber);
+        Mockito.verify(networkRepository).getCurrencyXmlRequest();
+
+        Mockito.verify(currencyXmlRequest[0]).fetchXmlData(captor.capture());
+
+        final Subscriber<String, RequestError> value = captor.getValue();
+        final Subscriber<String, RequestError> requestErrorSubscriber = Mockito.spy(value);
+
+        Mockito.verify(requestErrorSubscriber, Mockito.after(1000)).onNext(Currencies.CURRENCY_XML);
+        Mockito.verify(requestErrorSubscriber).onComplete();
 
     }
 
