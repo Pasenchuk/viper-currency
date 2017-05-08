@@ -6,7 +6,7 @@ package com.sbt.currency.repository;
 
 public interface LocalRepository {
 
-    int NO_ID = -1;
+    int NO_ID = -1, DOLLAR_ID = 840;
 
     String getCurrencyXml();
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sbt.currency.BaseTest;
@@ -43,6 +44,9 @@ public class CurrenciesFragmentTest extends BaseTest {
 
     @Mock
     TextView calculationResult;
+
+    @Mock
+    EditText amountField;
 
     @InjectMocks
     CurrenciesFragment currenciesFragment;
@@ -158,6 +162,19 @@ public class CurrenciesFragmentTest extends BaseTest {
     public void testOnFabClicked() throws Exception {
         currenciesFragment.onFabClicked(Mockito.mock(View.class));
         Mockito.verify(currenciesPresenter).onFabClicked();
+    }
+
+    @Test
+    public void testSetAmount() throws Exception {
+        currenciesFragment.setAmount("1");
+        Mockito.verify(amountField).setText("1");
+
+        currenciesFragment.setAmount("10");
+        Mockito.verify(amountField).setText("10");
+
+        currenciesFragment.setAmount("0,25");
+        Mockito.verify(amountField).setText("0,25");
+
     }
 
 }

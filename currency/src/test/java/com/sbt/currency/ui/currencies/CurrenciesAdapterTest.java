@@ -98,7 +98,7 @@ public class CurrenciesAdapterTest extends BaseTest {
     @Test
     public void testGetItemCount() throws Exception {
         currenciesAdapter.displayCurrencies = displayCurrenciesKzt;
-        Assert.assertEquals(currenciesAdapter.getItemId(0), 840);
+        Assert.assertEquals(currenciesAdapter.getItemCount(), displayCurrenciesKzt.size());
 
     }
 

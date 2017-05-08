@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sbt.currency.R;
 import com.sbt.currency.app.CurrencyApp;
@@ -31,6 +32,7 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
     TextView primaryCurrency;
     TextView secondaryCurrency;
     TextView calculationResult;
+    EditText amountField;
 
 
     public CurrenciesFragment() {
@@ -67,6 +69,7 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
         primaryCurrency = (TextView) view.findViewById(R.id.primary_currency);
         secondaryCurrency = (TextView) view.findViewById(R.id.secondary_currency);
         calculationResult = (TextView) view.findViewById(R.id.calculation_result);
+        amountField = (EditText) view.findViewById(R.id.amount_field);
     }
 
     @Override
@@ -79,6 +82,11 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
     @Override
     public void showPrimaryCurrency(DisplayCurrency currency) {
         primaryCurrency.setText(currency.getCharCode());
+    }
+
+    @Override
+    public void setAmount(String amount) {
+        amountField.setText(amount);
     }
 
     @Override
@@ -95,6 +103,11 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
     @Override
     public boolean isViewVisible() {
         return isVisible();
+    }
+
+    @Override
+    public void showToast(int id) {
+        Toast.makeText(getActivity(), id, Toast.LENGTH_SHORT).show();
     }
 
     public void onFabClicked(View view) {

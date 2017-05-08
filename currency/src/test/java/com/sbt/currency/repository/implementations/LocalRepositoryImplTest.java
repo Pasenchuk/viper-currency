@@ -73,7 +73,7 @@ public class LocalRepositoryImplTest extends BaseTest {
 
     @Test
     public void testAmount() throws Exception {
-        Assert.assertEquals(localRepository.getAmount(), 0f);
+        Assert.assertEquals(localRepository.getAmount(), 1f);
 
         localRepository.setAmount(10.f);
         Assert.assertEquals(localRepository.getAmount(), 10f);
@@ -89,7 +89,7 @@ public class LocalRepositoryImplTest extends BaseTest {
 
         localRepository.clear();
 
-        Assert.assertEquals(localRepository.getAmount(), 0f);
+        Assert.assertEquals(localRepository.getAmount(), 1f);
         Assert.assertEquals(localRepository.getPrimaryCurrencyId(), NO_ID);
         Assert.assertEquals(localRepository.getSecondaryCurrencyId(), NO_ID);
         Assert.assertEquals(localRepository.getCurrencyXml(), null);

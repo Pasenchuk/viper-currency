@@ -52,7 +52,7 @@ public class LocalRepositoryImpl implements LocalRepository {
 
     @Override
     public int getSecondaryCurrencyId() {
-        return sharedPreferences.getInt(SECONDARY_CURRENCY_KEY, NO_ID);
+        return sharedPreferences.getInt(SECONDARY_CURRENCY_KEY, DOLLAR_ID);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class LocalRepositoryImpl implements LocalRepository {
 
     @Override
     public float getAmount() {
-        return sharedPreferences.getInt(AMOUNT_KEY, 0);
+        return sharedPreferences.getFloat(AMOUNT_KEY, 1);
     }
 
     @Override

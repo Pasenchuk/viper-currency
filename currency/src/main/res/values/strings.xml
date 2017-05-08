@@ -3,4 +3,6 @@
 
     <string name="search">Поиск</string>
     <string name="amount">Сумма</string>
+    <string name="wrong_number">Неправильное число</string>
+    <string name="non_positive_number">Сумма должна быть положительной</string>
 </resources>
