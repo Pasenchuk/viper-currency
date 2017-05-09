@@ -74,23 +74,23 @@ public class LocalRepositoryImplTest extends BaseTest {
 
     @Test
     public void testAmount() throws Exception {
-        Assert.assertEquals(localRepository.getAmount(), 1f);
+        Assert.assertEquals(localRepository.getAmount(), "1");
 
-        localRepository.setAmount(10.f);
-        Assert.assertEquals(localRepository.getAmount(), 10f);
+        localRepository.setAmount("10");
+        Assert.assertEquals(localRepository.getAmount(), "10");
 
     }
 
     @Test
     public void testClear() throws Exception {
-        localRepository.setAmount(10.f);
+        localRepository.setAmount("10");
         localRepository.setCurrencyXml(Currencies.CURRENCY_XML);
         localRepository.setPrimaryCurrencyId(820);
         localRepository.setSecondaryCurrencyId(840);
 
         localRepository.clear();
 
-        Assert.assertEquals(localRepository.getAmount(), 1f);
+        Assert.assertEquals(localRepository.getAmount(), "1");
         Assert.assertEquals(localRepository.getPrimaryCurrencyId(), NO_ID);
         Assert.assertEquals(localRepository.getSecondaryCurrencyId(), DOLLAR_ID);
         Assert.assertEquals(localRepository.getCurrencyXml(), null);

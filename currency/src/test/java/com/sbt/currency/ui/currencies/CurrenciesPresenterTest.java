@@ -4,7 +4,6 @@ import com.sbt.currency.BaseTest;
 import com.sbt.currency.R;
 import com.sbt.currency.domain.DisplayCurrency;
 import com.sbt.currency.domain.ValCurs;
-import com.sbt.currency.domain.Valute;
 import com.sbt.currency.mocks.Currencies;
 import com.sbt.currency.mocks.MockModule;
 import com.sbt.currency.repository.LocalRepository;
@@ -107,12 +106,12 @@ public class CurrenciesPresenterTest extends BaseTest {
     @Test
     public void testPresetAmount() throws Exception {
         currenciesPresenter.presetAmount();
-        inOrder.verify(currenciesPresenter).setAmount(1);
+        inOrder.verify(currenciesPresenter).setAmount("1");
     }
 
     @Test
     public void testSetAmount() throws Exception {
-        currenciesPresenter.setAmount(10);
+        currenciesPresenter.setAmount("10");
         inOrder.verify(currenciesView).setAmount("10");
 
     }
@@ -131,7 +130,7 @@ public class CurrenciesPresenterTest extends BaseTest {
         currenciesPresenter.onCurrenciesResponse(currenciesFromXml);
 
         currenciesPresenter.onAmountChanged("12");
-        inOrder.verify(currenciesPresenter.localRepository).setAmount(12f);
+        inOrder.verify(currenciesPresenter.localRepository).setAmount("12");
         inOrder.verify(currenciesView).showSecondaryCurrency(Mockito.any());
 
         currenciesPresenter.onAmountChanged("-12");
@@ -141,15 +140,15 @@ public class CurrenciesPresenterTest extends BaseTest {
         inOrder.verify(currenciesView).showToast(R.string.wrong_number);
 
         currenciesPresenter.onAmountChanged("   ");
-        inOrder.verify(currenciesPresenter.localRepository).setAmount(0);
+        inOrder.verify(currenciesPresenter.localRepository).setAmount("0");
         inOrder.verify(currenciesView).showSecondaryCurrency(Mockito.any());
 
         currenciesPresenter.onAmountChanged("");
-        inOrder.verify(currenciesPresenter.localRepository).setAmount(0);
+        inOrder.verify(currenciesPresenter.localRepository).setAmount("0");
         inOrder.verify(currenciesView).showSecondaryCurrency(Mockito.any());
 
         currenciesPresenter.onAmountChanged("0");
-        inOrder.verify(currenciesPresenter.localRepository).setAmount(0);
+        inOrder.verify(currenciesPresenter.localRepository).setAmount("0");
         inOrder.verify(currenciesView).showSecondaryCurrency(Mockito.any());
 
     }
