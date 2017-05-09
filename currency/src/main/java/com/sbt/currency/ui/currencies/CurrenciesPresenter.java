@@ -1,7 +1,5 @@
 package com.sbt.currency.ui.currencies;
 
-import android.text.TextUtils;
-
 import com.sbt.currency.R;
 import com.sbt.currency.di.AppModule;
 import com.sbt.currency.domain.DisplayCurrency;
@@ -140,7 +138,7 @@ public class CurrenciesPresenter {
             return false;
         else if (valute.getNumCode() == secondaryCurrency.getNumCode())
             return false;
-        else if (TextUtils.isEmpty(query))
+        else if (query.length() == 0)
             return true;
         else if (valute.getCharCode().toLowerCase().contains(query.toLowerCase()))
             return true;
@@ -176,7 +174,7 @@ public class CurrenciesPresenter {
 
     public void onAmountChanged(String amount) {
         if (hasData)
-            if (TextUtils.isEmpty(amount.trim())) {
+            if (amount.trim().length() == 0) {
                 localRepository.setAmount(0);
                 currenciesView.showSecondaryCurrency(DisplayCurrencyFactory.getSecondaryCurrency(secondaryCurrency, primaryCurrency, 0));
             } else {
