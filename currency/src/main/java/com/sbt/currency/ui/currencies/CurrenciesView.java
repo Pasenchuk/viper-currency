@@ -22,4 +22,5 @@ public interface CurrenciesView {
 
     void showToast(int id);
 
+    void clearSearch();
 }

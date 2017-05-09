@@ -33,6 +33,7 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
     TextView secondaryCurrency;
     TextView calculationResult;
     EditText amountField;
+    EditText searchField;
 
 
     public CurrenciesFragment() {
@@ -70,6 +71,7 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
         secondaryCurrency = (TextView) view.findViewById(R.id.secondary_currency);
         calculationResult = (TextView) view.findViewById(R.id.calculation_result);
         amountField = (EditText) view.findViewById(R.id.amount_field);
+        searchField = (EditText) view.findViewById(R.id.search_field);
     }
 
     @Override
@@ -78,6 +80,11 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
         currenciesPresenter.onStart();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        currenciesPresenter.onResume();
+    }
 
     @Override
     public void showPrimaryCurrency(DisplayCurrency currency) {
@@ -108,6 +115,11 @@ public class CurrenciesFragment extends Fragment implements CurrenciesView {
     @Override
     public void showToast(int id) {
         Toast.makeText(getActivity(), id, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void clearSearch() {
+        searchField.setText("");
     }
 
     public void onFabClicked(View view) {

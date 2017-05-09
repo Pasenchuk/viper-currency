@@ -61,8 +61,7 @@
                         style="@style/TextAppearance.AppCompat.Large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="RUB" />
+                        android:layout_gravity="center"/>
 
                 </LinearLayout>
 
@@ -82,16 +81,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="@string/amount"
-                        android:text="56.22" />
+                        android:hint="@string/amount"/>
 
                     <TextView
                         android:id="@+id/secondary_currency"
                         style="@style/TextAppearance.AppCompat.Large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="USD" />
+                        android:layout_gravity="center" />
 
                 </LinearLayout>
 

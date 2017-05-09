@@ -10,7 +10,6 @@ import com.sbt.currency.exceptions.RequestError;
 import com.sbt.currency.interactors.CurrenciesInteractor;
 import com.sbt.currency.interactors.Subscriber;
 import com.sbt.currency.interactors.Subscribtion;
-import com.sbt.currency.interactors.transformers.AmountFormatTransformer;
 import com.sbt.currency.repository.LocalRepository;
 import com.sbt.currency.repository.LoggingRepository;
 
@@ -29,7 +28,6 @@ public class CurrenciesPresenter {
 
     private final CurrenciesView currenciesView;
     private final Valute defaultRubInstance;
-    private final AmountFormatTransformer amountFormatTransformer;
     Valute primaryCurrency, secondaryCurrency;
     Subscribtion subscribtion;
     List<Valute> rawCurrencies;
@@ -44,7 +42,6 @@ public class CurrenciesPresenter {
         loggingRepository = appModule.getLoggingRepository();
 
         defaultRubInstance = Valute.defaultRubInstance();
-        amountFormatTransformer = new AmountFormatTransformer();
 
     }
 
@@ -56,6 +53,11 @@ public class CurrenciesPresenter {
 
         queryForCurrencies();
 
+    }
+
+
+    public void onResume() {
+        updateCurrencies();
     }
 
     void queryForCurrencies() {
@@ -79,16 +81,14 @@ public class CurrenciesPresenter {
     void onCurrenciesResponse(ValCurs valCurs) {
         hasData = true;
         rawCurrencies = valCurs.getValute();
-        if (currenciesView.isViewVisible()) {
-
-            updateCurrencies();
-        }
-    }
-
-    void updateCurrencies() {
 
         initMainCurrencies();
 
+        if (currenciesView.isViewVisible())
+            updateCurrencies();
+    }
+
+    void updateCurrencies() {
         if (hasData) {
             showMainCurrencies();
             initListCurrencies();
@@ -97,7 +97,7 @@ public class CurrenciesPresenter {
 
     void showMainCurrencies() {
         currenciesView.showPrimaryCurrency(DisplayCurrencyFactory.getPrimaryCurrency(primaryCurrency));
-        currenciesView.showSecondaryCurrency(DisplayCurrencyFactory.getSecondaryCurrency(secondaryCurrency, primaryCurrency, localRepository.getAmount()));
+        currenciesView.showSecondaryCurrency(DisplayCurrencyFactory.getSecondaryCurrency(secondaryCurrency, primaryCurrency, Double.valueOf(localRepository.getAmount())));
     }
 
     void initMainCurrencies() {
@@ -134,18 +134,20 @@ public class CurrenciesPresenter {
     }
 
     boolean filterCurrency(Valute valute) {
+        if (!hasData)
+            return false;
         if (valute.getNumCode() == primaryCurrency.getNumCode())
             return false;
-        else if (valute.getNumCode() == secondaryCurrency.getNumCode())
+        if (valute.getNumCode() == secondaryCurrency.getNumCode())
             return false;
-        else if (query.length() == 0)
+        if (query.length() == 0)
             return true;
-        else if (valute.getCharCode().toLowerCase().contains(query.toLowerCase()))
+        if (valute.getCharCode().toLowerCase().contains(query.toLowerCase()))
             return true;
-        else if (valute.getName().toLowerCase().contains(query.toLowerCase()))
+        if (valute.getName().toLowerCase().contains(query.toLowerCase()))
             return true;
-        else
-            return false;
+
+        return false;
     }
 
 
@@ -156,12 +158,11 @@ public class CurrenciesPresenter {
     }
 
     void presetAmount() {
-        final float amount = localRepository.getAmount();
-        setAmount(amount);
+        setAmount(localRepository.getAmount());
     }
 
-    void setAmount(double amount) {
-        currenciesView.setAmount(amountFormatTransformer.write(amount));
+    void setAmount(String amount) {
+        currenciesView.setAmount(amount);
     }
 
 
@@ -173,23 +174,25 @@ public class CurrenciesPresenter {
     }
 
     public void onAmountChanged(String amount) {
-        if (hasData)
+        if (hasData) {
+            final String trimedAmount = amount.trim();
             if (amount.trim().length() == 0) {
-                localRepository.setAmount(0);
+                localRepository.setAmount("0");
                 currenciesView.showSecondaryCurrency(DisplayCurrencyFactory.getSecondaryCurrency(secondaryCurrency, primaryCurrency, 0));
             } else {
                 try {
-                    final float v = Float.parseFloat(amount);
+                    final float v = Float.parseFloat(trimedAmount);
                     if (v < 0)
                         currenciesView.showToast(R.string.non_positive_number);
                     else {
-                        localRepository.setAmount(v);
+                        localRepository.setAmount(trimedAmount);
                         currenciesView.showSecondaryCurrency(DisplayCurrencyFactory.getSecondaryCurrency(secondaryCurrency, primaryCurrency, v));
                     }
                 } catch (NumberFormatException e) {
                     currenciesView.showToast(R.string.wrong_number);
                 }
             }
+        }
     }
 
     public void onSearchChanged(String s) {
@@ -200,6 +203,9 @@ public class CurrenciesPresenter {
 
     public void onCurrencySelected(int numCode) {
         localRepository.setSecondaryCurrencyId(numCode);
+        initMainCurrencies();
+        currenciesView.clearSearch();
+        query = "";
         updateCurrencies();
     }
 }

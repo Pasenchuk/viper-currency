@@ -20,9 +20,9 @@ public interface LocalRepository {
 
     void setSecondaryCurrencyId(int id);
 
-    float getAmount();
+    String getAmount();
 
-    void setAmount(float amount);
+    void setAmount(String amount);
 
     void clear();
 

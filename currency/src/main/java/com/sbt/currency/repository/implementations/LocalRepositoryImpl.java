@@ -64,15 +64,15 @@ public class LocalRepositoryImpl implements LocalRepository {
     }
 
     @Override
-    public float getAmount() {
-        return sharedPreferences.getFloat(AMOUNT_KEY, 1);
+    public String getAmount() {
+        return sharedPreferences.getString(AMOUNT_KEY, "1");
     }
 
     @Override
-    public void setAmount(float amount) {
+    public void setAmount(String amount) {
         sharedPreferences
                 .edit()
-                .putFloat(AMOUNT_KEY, amount)
+                .putString(AMOUNT_KEY, amount)
                 .apply();
     }
 
